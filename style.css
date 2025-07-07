@@ -1,0 +1,247 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff;
+    color: #222;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    background: #f8f8f8;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.3em;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1em;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #222;
+}
+
+.categories {
+    padding: 2em 1em 1em 1em;
+    text-align: center;
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    margin-top: 1.5em;
+    align-items: center;
+}
+
+.category-card {
+    background: #f0f0f0;
+    border-radius: 12px;
+    padding: 1em 1em 1.2em 1em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90vw;
+    max-width: 340px;
+    transition: box-shadow 0.2s;
+}
+.category-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+.category-card img {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 0.8em;
+    object-fit: cover;
+}
+.category-card span {
+    font-size: 1.1em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.subscribe {
+    margin: 2em 1em;
+    text-align: center;
+}
+
+.subscribe input[type="email"] {
+    padding: 0.5em;
+    width: 70%;
+    max-width: 250px;
+    margin-right: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.subscribe button {
+    padding: 0.5em 1em;
+    border: none;
+    background: #222;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.terms {
+    font-size: 0.9em;
+    color: #888;
+    margin-top: 0.5em;
+}
+
+footer {
+    background: #f8f8f8;
+    padding: 1em;
+    text-align: center;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1em 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+}
+
+footer ul li a {
+    color: #222;
+    text-decoration: none;
+    font-size: 0.95em;
+}
+
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background: #fff;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1001;
+  padding-top: 2em;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar.open {
+  transform: translateX(0);
+}
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2em;
+  color: #222;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  cursor: pointer;
+}
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 2em 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+.sidebar-links li a {
+  color: #222;
+  text-decoration: none;
+  font-size: 1.2em;
+  padding: 0.5em 1em;
+  display: block;
+}
+.menu-btn {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  margin-right: 1em;
+}
+.menu-btn span {
+  display: block;
+  height: 4px;
+  width: 28px;
+  background: #222;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+/* Планшеты: две колонки */
+@media (min-width: 600px) and (max-width: 999px) {
+    .category-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2em;
+    }
+    .category-card {
+        width: 45vw;
+        max-width: 320px;
+    }
+    .sidebar {
+        display: flex;
+    }
+    .menu-btn {
+        display: flex;
+    }
+}
+
+/* Десктоп: в ряд, крупнее */
+@media (min-width: 1000px) {
+    .category-list {
+        flex-direction: row;
+        justify-content: center;
+        gap: 2.5em;
+    }
+    .category-card {
+        width: 300px;
+        max-width: 340px;
+    }
+    .sidebar {
+        display: none;
+    }
+    .menu-btn {
+        display: none;
+    }
+    header nav {
+        justify-content: flex-start;
+    }
+}
+
+/* Мелкие экраны */
+@media (max-width: 400px) {
+    .category-card {
+        padding: 0.7em 0.3em 1em 0.3em;
+        font-size: 0.95em;
+    }
+    .category-card img {
+        max-width: 90vw;
+    }
+    .logo {
+        font-size: 1em;
+    }
+} 
