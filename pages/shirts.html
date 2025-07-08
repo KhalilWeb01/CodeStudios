@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shirts | Code Studios</title>
+  <link rel="stylesheet" href="../style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    .category-section {
+      padding: 2em 1em 1em 1em;
+      text-align: center;
+    }
+    .product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5em;
+      margin-top: 1.5em;
+      align-items: center;
+    }
+    .product-card {
+      background: #f0f0f0;
+      border-radius: 12px;
+      padding: 1em 1em 1.2em 1em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90vw;
+      max-width: 340px;
+      transition: box-shadow 0.2s;
+    }
+    .product-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    }
+    .product-card img {
+      width: 100%;
+      max-width: 260px;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 0.8em;
+      object-fit: cover;
+    }
+    .product-card span {
+      font-size: 1.1em;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    @media (min-width: 600px) and (max-width: 999px) {
+      .product-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2em 2em;
+      }
+      .product-card {
+        width: 260px;
+        max-width: 260px;
+      }
+    }
+    @media (min-width: 1000px) {
+      .product-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2.5em 2.5em;
+      }
+      .product-card {
+        width: 260px;
+        max-width: 260px;
+      }
+    }
+    @media (max-width: 400px) {
+      .product-card {
+        padding: 0.7em 0.5em 1em 0.5em;
+      }
+      .product-card img {
+        max-width: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar-flex">
+      <button class="menu-btn" id="openSidebar" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="brand-logo-wrap">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg width="64" height="64" viewBox="0 0 64 64">
+              <path class="logo-arc-top" d="M 14 29 a 20 20 0 1 1 40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
+              <path class="logo-arc-bottom" d="M 14 35 a 20.5 21 0 0 0  40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
+              <line class="logo-vert" x1="32" y1="12" x2="32" y2="52" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
+              <line class="logo-horiz" x1="32" y1="32" x2="52" y2="32" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
+            </svg>
+          </div>
+        </div>
+        <span class="brand-name">Code Studios</span>
+      </div>
+      <button class="search-btn" aria-label="Search">
+        <svg class="search-icon" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7" />
+          <line x1="18" y1="18" x2="15.5" y2="15.5" />
+        </svg>
+      </button>
+    </nav>
+  </header>
+  <main>
+    <section class="category-section">
+      <h2>Shirts</h2>
+      <div class="product-list">
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Classic Shirt">
+          <span>Classic Shirt</span>
+        </div>
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" alt="White Shirt">
+          <span>White Shirt</span>
+        </div>
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80" alt="Blue Shirt">
+          <span>Blue Shirt</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <section class="subscribe">
+      <h3>Join our mailing list</h3>
+      <form>
+        <input type="email" placeholder="Your Email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="terms">By continuing, you agree to our <a href="#">Terms Of Use</a> and <a href="#">Privacy & Cookie Policy</a>.</p>
+    </section>
+    <ul class="footer-links">
+      <li><a href="#">Shipping Info</a></li>
+      <li><a href="#">Terms & Conditions</a></li>
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Return Policy</a></li>
+      <li><a href="#">Contact Us</a></li>
+    </ul>
+    <p>© 2025 Code Studios - ALL RIGHTS RESERVED</p>
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html> 

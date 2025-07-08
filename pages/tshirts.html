@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T-shirts | Code Studios</title>
+  <link rel="stylesheet" href="../style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav class="navbar-flex">
+      <button class="menu-btn" id="openSidebar" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="brand-logo-wrap">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg width="64" height="64" viewBox="0 0 64 64">
+              <path class="logo-arc-top" d="M 14 29 a 20 20 0 1 1 40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
+              <path class="logo-arc-bottom" d="M 14 35 a 20.5 21 0 0 0  40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
+              <line class="logo-vert" x1="32" y1="12" x2="32" y2="52" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
+              <line class="logo-horiz" x1="32" y1="32" x2="52" y2="32" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
+            </svg>
+          </div>
+        </div>
+        <span class="brand-name">Code Studios</span>
+      </div>
+      <div class="search-box-wrap">
+        <input type="text" class="search-input-box" id="searchInputBox" placeholder="Search products..." style="display:none;">
+        <div class="search-suggestions" id="searchSuggestions" style="display:none;"></div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section class="category-section">
+      <h2>T-shirts</h2>
+      <div class="product-toolbar">
+        <div class="toolbar-left">
+          <span class="toolbar-sort-label">Sort <span class="toolbar-caret">▼</span></span>
+          <span class="toolbar-sort-active">Most Popular</span>
+          <span class="toolbar-price">Price <span class="toolbar-price-arrows">⇅</span></span>
+        </div>
+        <div class="toolbar-right">
+          <span class="toolbar-filter">Filter
+            <svg class="toolbar-filter-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="5" x2="17" y2="5" />
+              <line x1="6" y1="10" x2="14" y2="10" />
+              <line x1="9" y1="15" x2="11" y2="15" />
+            </svg>
+          </span>
+        </div>
+      </div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-discount">-5%</div>
+          <div class="product-image-wrap">
+            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" alt="MEN T-SHIRT OVERSIZED">
+            <button class="product-fav" aria-label="Add to favorites">&#9825;</button>
+          </div>
+          <div class="product-info">
+            <div class="product-title">MEN T-SHIRT OVERSIZED...</div>
+            <div class="product-price-row">
+              <span class="product-price">48.23</span>
+              <span class="product-old-price">50.77</span>
+            </div>
+            <div class="product-colors">
+              <span class="color-dot" style="background:#222"></span>
+              <span class="color-dot" style="background:#fff; border:1px solid #ccc"></span>
+              <span class="color-dot" style="background:#bfae9e"></span>
+              <span class="color-dot" style="background:#a7b1b7"></span>
+              <span class="color-dot" style="background:#c7b7a3"></span>
+              <span class="color-dot more">&#8230;</span>
+            </div>
+            <div class="product-meta">
+              <span class="product-rating">4.9 ★</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-discount">-5%</div>
+          <div class="product-image-wrap">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="OVERSIZED RELAXED FIT">
+            <button class="product-fav" aria-label="Add to favorites">&#9825;</button>
+          </div>
+          <div class="product-info">
+            <div class="product-title">OVERSIZED RELAXED FIT...</div>
+            <div class="product-price-row">
+              <span class="product-price">72.38</span>
+              <span class="product-old-price">76.19</span>
+            </div>
+            <div class="product-colors">
+              <span class="color-dot" style="background:#eee; border:1px solid #ccc"></span>
+              <span class="color-dot" style="background:#bfae9e"></span>
+              <span class="color-dot" style="background:#a7b1b7"></span>
+              <span class="color-dot" style="background:#c7b7a3"></span>
+              <span class="color-dot more">&#8230;</span>
+            </div>
+            <div class="product-meta">
+              <span class="product-rating">4.9 ★</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image-wrap">
+            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" alt="CROP FIT TEXTURED SHORT SLEEVE">
+            <button class="product-fav" aria-label="Add to favorites">&#9825;</button>
+          </div>
+          <div class="product-info">
+            <div class="product-title">CROP FIT TEXTURED SHORT SLEEVE</div>
+            <div class="product-price-row">
+              <span class="product-price">46.54</span>
+            </div>
+            <div class="product-colors">
+              <span class="color-dot" style="background:#222"></span>
+              <span class="color-dot" style="background:#fff; border:1px solid #ccc"></span>
+              <span class="color-dot" style="background:#bfae9e"></span>
+              <span class="color-dot" style="background:#a7b1b7"></span>
+              <span class="color-dot more">&#8230;</span>
+            </div>
+            <div class="product-meta">
+              <span class="product-rating">4.9 ★</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-discount">-10%</div>
+          <div class="product-image-wrap">
+            <img src="https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80" alt="CROP FIT PREMIUM HEAVYWEIGHT">
+            <button class="product-fav" aria-label="Add to favorites">&#9825;</button>
+          </div>
+          <div class="product-info">
+            <div class="product-title">CROP FIT PREMIUM HEAVYWEIGHT</div>
+            <div class="product-price-row">
+              <span class="product-price">41.88</span>
+              <span class="product-old-price">46.54</span>
+            </div>
+            <div class="product-colors">
+              <span class="color-dot" style="background:#eee; border:1px solid #ccc"></span>
+              <span class="color-dot" style="background:#bfae9e"></span>
+              <span class="color-dot" style="background:#a7b1b7"></span>
+              <span class="color-dot more">&#8230;</span>
+            </div>
+            <div class="product-meta">
+              <span class="product-rating">4.9 ★</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="filter-modal" id="filterModal" style="display:none;">
+      <div class="filter-modal-content">
+        <h3>Filter by color</h3>
+        <form id="filterColorsForm">
+          <label><input type="checkbox" value="#222"> <span class="color-dot" style="background:#222"></span> Black</label><br>
+          <label><input type="checkbox" value="#fff"> <span class="color-dot" style="background:#fff; border:1px solid #ccc"></span> White</label><br>
+          <label><input type="checkbox" value="#bfae9e"> <span class="color-dot" style="background:#bfae9e"></span> Beige</label><br>
+          <label><input type="checkbox" value="#a7b1b7"> <span class="color-dot" style="background:#a7b1b7"></span> Blue Gray</label><br>
+          <label><input type="checkbox" value="#c7b7a3"> <span class="color-dot" style="background:#c7b7a3"></span> Sand</label><br>
+          <label><input type="checkbox" value="#eee"> <span class="color-dot" style="background:#eee; border:1px solid #ccc"></span> Light Gray</label><br>
+        </form>
+        <button id="applyFilterBtn">Apply</button>
+        <button id="resetFilterBtn" type="button">Reset</button>
+        <button id="closeFilterBtn" type="button">Close</button>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <section class="subscribe">
+      <h3>Join our mailing list</h3>
+      <form>
+        <input type="email" placeholder="Your Email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="terms">By continuing, you agree to our <a href="#">Terms Of Use</a> and <a href="#">Privacy & Cookie Policy</a>.</p>
+    </section>
+    <ul class="footer-links">
+      <li><a href="#">Shipping Info</a></li>
+      <li><a href="#">Terms & Conditions</a></li>
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Return Policy</a></li>
+      <li><a href="#">Contact Us</a></li>
+    </ul>
+    <p>© 2025 Code Studios - ALL RIGHTS RESERVED</p>
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html> 
