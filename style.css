@@ -14,9 +14,128 @@ header nav {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
     font-weight: bold;
     font-size: 1.3em;
     letter-spacing: 1px;
+}
+
+.logo-icon {
+    position: relative;
+    width: 32px;
+    height: 32px;
+}
+
+.logo-icon path,
+.logo-icon line {
+    stroke: #222;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    fill: none;
+}
+
+.logo-icon .circle-anim {
+    stroke-dasharray: 75;
+    stroke-dashoffset: 75;
+    animation: draw-circle 1.2s ease-in-out forwards, repeat-anim 4s linear infinite;
+}
+
+.logo-icon .circle-anim2 {
+    stroke-dasharray: 75;
+    stroke-dashoffset: 75;
+    animation: draw-circle 1.2s 1.2s ease-in-out forwards, repeat-anim 4s linear infinite 2s;
+}
+
+.logo-icon .logo-vert {
+    stroke: #222;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    animation:
+        vert-fall 0.7s cubic-bezier(.4,1.7,.7,1.01) forwards,
+        vert-hold 2s 0.7s linear forwards,
+        vert-hide 0.7s 2.7s cubic-bezier(.4,1.7,.7,1.01) forwards;
+    animation-iteration-count: infinite;
+}
+
+.logo-icon .logo-horiz {
+    stroke: #222;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-dasharray: 6;
+    stroke-dashoffset: 6;
+    animation:
+        horiz-show 0.5s 0.7s cubic-bezier(.4,1.7,.7,1.01) forwards,
+        horiz-hold 2s 1.2s linear forwards,
+        horiz-hide 0.5s 3.2s cubic-bezier(.4,1.7,.7,1.01) forwards;
+    animation-iteration-count: infinite;
+}
+
+.logo-icon .circle-anim3 {
+    stroke-dasharray: 75;
+    stroke-dashoffset: 75;
+    animation: draw-circle 2.1s 1.2s ease-in-out forwards, repeat-anim 4s linear infinite 2s;
+}
+
+@keyframes draw-circle {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes draw-vert {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes draw-horiz {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes repeat-anim {
+    0% { stroke-dashoffset: 75; }
+    99.9% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 75; }
+}
+@keyframes draw-circle3 {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes repeat-anim3 {
+    0% { stroke-dashoffset: 30; }
+    99.9% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 30; }
+}
+
+.logo-arc {
+    fill: none;
+    stroke: #222;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+}
+
+.top-arc {
+    animation: draw-arc 2s ease-in-out infinite;
+}
+
+.bottom-arc {
+    animation: draw-arc 2s ease-in-out infinite 1s;
+}
+
+@keyframes draw-arc {
+    0% { stroke-dashoffset: 100; }
+    50% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -100; }
+}
+
+.logo-vertical {
+    stroke: #222;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+.logo-horizontal-right {
+    stroke: #222;
+    stroke-width: 2;
+    stroke-linecap: round;
 }
 
 .nav-links {
@@ -244,4 +363,23 @@ footer ul li a {
     .logo {
         font-size: 1em;
     }
+}
+
+@keyframes vert-fall {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes vert-hold {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes vert-hide {
+    to { stroke-dashoffset: 24; }
+}
+@keyframes horiz-show {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes horiz-hold {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes horiz-hide {
+    to { stroke-dashoffset: 6; }
 } 
