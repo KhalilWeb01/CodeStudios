@@ -27,12 +27,59 @@
         <span class="brand-name">Code Studios</span>
       </div>
       <div class="search-box-wrap">
+        <button class="search-btn" aria-label="Search">
+          <svg class="search-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><line x1="15.5" y1="15.5" x2="20" y2="20"/></svg>
+        </button>
         <input type="text" class="search-input-box" id="searchInputBox" placeholder="Search products..." style="display:none;">
         <div class="search-suggestions" id="searchSuggestions" style="display:none;"></div>
       </div>
     </nav>
   </header>
-  <main>
+  <main class="main-container">
+    <section class="promo-slider-section">
+      <div class="promo-slider" id="promoSlider">
+        <div class="promo-slide active" data-bg="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80">
+          <div class="promo-slide-overlay"></div>
+          <div class="promo-slide-info">
+            <h3 class="promo-slide-title">🔥 Summer Sale: Oversized T-shirt</h3>
+            <div class="promo-slide-prices">
+              <span class="promo-slide-price">39.99 AED</span>
+              <span class="promo-slide-old-price">59.99 AED</span>
+            </div>
+            <div class="promo-slide-desc">Only this week! Limited stock.</div>
+            <div class="promo-slide-timer" data-deadline="2024-07-10T23:59:59"></div>
+            <a href="#" class="promo-slide-btn">Shop Now</a>
+          </div>
+        </div>
+        <div class="promo-slide" data-bg="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80">
+          <div class="promo-slide-overlay"></div>
+          <div class="promo-slide-info">
+            <h3 class="promo-slide-title">🔥 Bestseller: Relaxed Fit Tee</h3>
+            <div class="promo-slide-prices">
+              <span class="promo-slide-price">44.50 AED</span>
+              <span class="promo-slide-old-price">69.00 AED</span>
+            </div>
+            <div class="promo-slide-desc">Hurry up! Sale ends soon.</div>
+            <div class="promo-slide-timer" data-deadline="2024-07-12T23:59:59"></div>
+            <a href="#" class="promo-slide-btn">Shop Now</a>
+          </div>
+        </div>
+        <div class="promo-slide" data-bg="https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=800&q=80">
+          <div class="promo-slide-overlay"></div>
+          <div class="promo-slide-info">
+            <h3 class="promo-slide-title">🔥 Limited Edition: Heavyweight Tee</h3>
+            <div class="promo-slide-prices">
+              <span class="promo-slide-price">54.90 AED</span>
+              <span class="promo-slide-old-price">79.00 AED</span>
+            </div>
+            <div class="promo-slide-desc">Exclusive offer! Don’t miss out.</div>
+            <div class="promo-slide-timer" data-deadline="2024-07-15T23:59:59"></div>
+            <a href="#" class="promo-slide-btn">Shop Now</a>
+          </div>
+        </div>
+        <div class="promo-slider-dots" id="promoSliderDots"></div>
+      </div>
+    </section>
     <section class="category-section">
       <h2>T-shirts</h2>
       <div class="product-toolbar">
@@ -51,102 +98,7 @@
           </span>
         </div>
       </div>
-      <div class="product-grid">
-        <div class="product-card">
-          <div class="product-discount">-5%</div>
-          <div class="product-image-wrap">
-            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" alt="MEN T-SHIRT OVERSIZED">
-            <button class="product-fav" aria-label="Add to favorites">&#9825;</button>
-          </div>
-          <div class="product-info">
-            <div class="product-title">MEN T-SHIRT OVERSIZED...</div>
-            <div class="product-price-row">
-              <span class="product-price">48.23</span>
-              <span class="product-old-price">50.77</span>
-            </div>
-            <div class="product-colors">
-              <span class="color-dot" style="background:#222"></span>
-              <span class="color-dot" style="background:#fff; border:1px solid #ccc"></span>
-              <span class="color-dot" style="background:#bfae9e"></span>
-              <span class="color-dot" style="background:#a7b1b7"></span>
-              <span class="color-dot" style="background:#c7b7a3"></span>
-              <span class="color-dot more">&#8230;</span>
-            </div>
-            <div class="product-meta">
-              <span class="product-rating">4.9 ★</span>
-            </div>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-discount">-5%</div>
-          <div class="product-image-wrap">
-            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="OVERSIZED RELAXED FIT">
-            <button class="product-fav" aria-label="Add to favorites">&#9825;</button>
-          </div>
-          <div class="product-info">
-            <div class="product-title">OVERSIZED RELAXED FIT...</div>
-            <div class="product-price-row">
-              <span class="product-price">72.38</span>
-              <span class="product-old-price">76.19</span>
-            </div>
-            <div class="product-colors">
-              <span class="color-dot" style="background:#eee; border:1px solid #ccc"></span>
-              <span class="color-dot" style="background:#bfae9e"></span>
-              <span class="color-dot" style="background:#a7b1b7"></span>
-              <span class="color-dot" style="background:#c7b7a3"></span>
-              <span class="color-dot more">&#8230;</span>
-            </div>
-            <div class="product-meta">
-              <span class="product-rating">4.9 ★</span>
-            </div>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image-wrap">
-            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" alt="CROP FIT TEXTURED SHORT SLEEVE">
-            <button class="product-fav" aria-label="Add to favorites">&#9825;</button>
-          </div>
-          <div class="product-info">
-            <div class="product-title">CROP FIT TEXTURED SHORT SLEEVE</div>
-            <div class="product-price-row">
-              <span class="product-price">46.54</span>
-            </div>
-            <div class="product-colors">
-              <span class="color-dot" style="background:#222"></span>
-              <span class="color-dot" style="background:#fff; border:1px solid #ccc"></span>
-              <span class="color-dot" style="background:#bfae9e"></span>
-              <span class="color-dot" style="background:#a7b1b7"></span>
-              <span class="color-dot more">&#8230;</span>
-            </div>
-            <div class="product-meta">
-              <span class="product-rating">4.9 ★</span>
-            </div>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-discount">-10%</div>
-          <div class="product-image-wrap">
-            <img src="https://images.unsplash.com/photo-1469398715555-76331a6c7c9b?auto=format&fit=crop&w=400&q=80" alt="CROP FIT PREMIUM HEAVYWEIGHT">
-            <button class="product-fav" aria-label="Add to favorites">&#9825;</button>
-          </div>
-          <div class="product-info">
-            <div class="product-title">CROP FIT PREMIUM HEAVYWEIGHT</div>
-            <div class="product-price-row">
-              <span class="product-price">41.88</span>
-              <span class="product-old-price">46.54</span>
-            </div>
-            <div class="product-colors">
-              <span class="color-dot" style="background:#eee; border:1px solid #ccc"></span>
-              <span class="color-dot" style="background:#bfae9e"></span>
-              <span class="color-dot" style="background:#a7b1b7"></span>
-              <span class="color-dot more">&#8230;</span>
-            </div>
-            <div class="product-meta">
-              <span class="product-rating">4.9 ★</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="product-grid" id="tshirtProductGrid"></div>
     </section>
     <div class="filter-modal" id="filterModal" style="display:none;">
       <div class="filter-modal-content">
@@ -164,6 +116,15 @@
         <button id="closeFilterBtn" type="button">Close</button>
       </div>
     </div>
+    <!-- Sidebar для работы кнопки меню -->
+    <aside class="sidebar" id="sidebar">
+      <button class="close-btn" id="closeSidebar" aria-label="Close menu">&times;</button>
+      <ul class="sidebar-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Cart</a></li>
+        <li><a href="#">Me</a></li>
+      </ul>
+    </aside>
   </main>
   <footer>
     <section class="subscribe">
@@ -184,5 +145,177 @@
     <p>© 2025 Code Studios - ALL RIGHTS RESERVED</p>
   </footer>
   <script src="../script.js"></script>
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+  function getProducts() {
+    const data = localStorage.getItem('products');
+    if (!data) return [];
+    return JSON.parse(data);
+  }
+  function generateProductId() {
+    return 'prod_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  }
+  function migrateExistingProducts() {
+    const products = getProducts();
+    let needsUpdate = false;
+    products.forEach(product => {
+      if (!product.id) {
+        product.id = generateProductId();
+        needsUpdate = true;
+      }
+    });
+    if (needsUpdate) {
+      localStorage.setItem('products', JSON.stringify(products));
+    }
+  }
+  function calcDiscount(price, oldPrice) {
+    if (!oldPrice || !price) return null;
+    return Math.round(100 - (price / oldPrice) * 100);
+  }
+  function renderTshirtProducts() {
+    const grid = document.getElementById('tshirtProductGrid');
+    if (!grid) return;
+    const products = getProducts().filter(p => p.category === 'tshirt');
+    if (products.length === 0) {
+      grid.innerHTML = '<div style="padding:2em;">No T-shirts found.</div>';
+      return;
+    }
+    grid.innerHTML = products.map(product => {
+      const discount = (product.oldPrice && product.price) ? calcDiscount(product.price, product.oldPrice) : null;
+      return `
+      <div class="product-card" style="background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.07);padding:1em 1em 1.2em 1em;display:flex;flex-direction:column;align-items:center;position:relative;max-width:320px;margin:0 auto 2em auto;cursor:pointer;" onclick="window.location.href='../product.html?id=${product.id}'">
+        <div class="product-image-wrap" style="width:100%;display:flex;justify-content:center;align-items:center;gap:4px;position:relative;">
+          ${discount ? `<div style='position:absolute;left:10px;top:10px;background:#f66;color:#fff;font-size:1em;padding:2px 10px;border-radius:7px;z-index:3;'>-${discount}%</div>` : ''}
+          ${product.photos && product.photos[0] ? `<img src="${product.photos[0]}" alt="product" style="width:100%;max-width:220px;max-height:220px;border-radius:10px;object-fit:cover;position:relative;z-index:1;">` : ''}
+          <button class="product-fav" aria-label="Add to favorites" style="position:absolute;right:16px;top:10px;background:#fff;border-radius:50%;border:none;width:32px;height:32px;box-shadow:0 2px 8px rgba(0,0,0,0.07);font-size:1.2em;cursor:pointer;z-index:3;" onclick="event.stopPropagation();">&#9825;</button>
+        </div>
+        <div class="product-info" style="width:100%;margin-top:1em;">
+          <div class="product-title" style="font-size:1.1em;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${product.name}</div>
+          <div class="product-price-row" style="margin:0.5em 0;display:flex;align-items:center;gap:10px;justify-content:space-between;">
+            <span style="display:flex;align-items:center;gap:10px;">
+              <span class="product-price" style="font-size:1.2em;font-weight:700;color:#d33;">${product.price} AED</span>
+              ${product.oldPrice ? `<span class="product-old-price" style="text-decoration:line-through;color:#888;font-size:1em;">${product.oldPrice} AED</span>` : ''}
+            </span>
+            ${product.rating ? `<span class="product-rating" style="color:#f90;font-weight:600;">${product.rating} &#9733;</span>` : ''}
+          </div>
+          <div class="product-colors" style="margin-bottom:0.5em;">
+            ${(product.colors||[]).map(c=>`<span class='color-dot' style='display:inline-block;width:18px;height:18px;border-radius:50%;background:${c};margin:0 2px;border:1.5px solid #ccc;vertical-align:middle;'></span>`).join('')}
+          </div>
+          <div class="product-meta" style="display:flex;align-items:center;gap:10px;">
+            <span class="product-qty" style="color:#888;">Stock: ${product.quantity}</span>
+            <button class="product-cart" aria-label="Add to cart" style="background:#fff;border-radius:50%;border:1.5px solid #eee;width:32px;height:32px;box-shadow:0 2px 8px rgba(0,0,0,0.07);font-size:1.2em;cursor:pointer;" onclick="event.stopPropagation();">&#128722;</button>
+          </div>
+        </div>
+      </div>
+    `}).join('');
+  }
+
+  // Search functionality
+  const searchBtn = document.querySelector('.search-btn');
+  const searchInput = document.getElementById('searchInputBox');
+  const searchSuggestions = document.getElementById('searchSuggestions');
+  const searchBoxWrap = document.querySelector('.search-box-wrap');
+
+  function showSearchInput() {
+    if (searchInput) {
+      searchInput.style.display = 'block';
+      searchInput.value = '';
+      searchInput.focus();
+    }
+    if (searchSuggestions) {
+      searchSuggestions.style.display = 'none';
+      searchSuggestions.innerHTML = '';
+    }
+    if (searchBtn) searchBtn.style.display = 'none';
+  }
+
+  function hideSearchInput() {
+    if (searchInput) searchInput.style.display = 'none';
+    if (searchSuggestions) {
+      searchSuggestions.style.display = 'none';
+      searchSuggestions.innerHTML = '';
+    }
+    if (searchBtn) searchBtn.style.display = 'block';
+    // Reset search and show all products
+    renderTshirtProducts();
+  }
+
+  if (searchBtn && searchInput) {
+    searchBtn.addEventListener('click', showSearchInput);
+  }
+
+  // Close search when clicking outside
+  document.addEventListener('mousedown', function(e) {
+    if (searchInput && searchInput.style.display === 'block') {
+      if (!searchBoxWrap.contains(e.target)) {
+        hideSearchInput();
+      }
+    }
+  });
+
+  // Close search on Escape key
+  if (searchInput) {
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') hideSearchInput();
+    });
+  }
+
+  // Search functionality
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      const query = searchInput.value.trim().toLowerCase();
+      const grid = document.getElementById('tshirtProductGrid');
+      if (!grid) return;
+
+      if (!query) {
+        renderTshirtProducts();
+        return;
+      }
+
+      const products = getProducts().filter(p => p.category === 'tshirt');
+      const filteredProducts = products.filter(product => 
+        product.name.toLowerCase().includes(query)
+      );
+
+      if (filteredProducts.length === 0) {
+        grid.innerHTML = '<div style="padding:2em;text-align:center;">No T-shirts found matching "' + query + '".</div>';
+        return;
+      }
+
+      grid.innerHTML = filteredProducts.map(product => {
+        const discount = (product.oldPrice && product.price) ? calcDiscount(product.price, product.oldPrice) : null;
+        return `
+        <div class="product-card" style="background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.07);padding:1em 1em 1.2em 1em;display:flex;flex-direction:column;align-items:center;position:relative;max-width:320px;margin:0 auto 2em auto;">
+          ${discount ? `<div style='position:absolute;left:10px;top:10px;background:#f66;color:#fff;font-size:1em;padding:2px 10px;border-radius:7px;'>-${discount}%</div>` : ''}
+          <div class="product-image-wrap" style="width:100%;display:flex;justify-content:center;align-items:center;gap:4px;">
+            ${product.photos && product.photos[0] ? `<img src="${product.photos[0]}" alt="product" style="width:100%;max-width:220px;max-height:220px;border-radius:10px;object-fit:cover;">` : ''}
+            <button class="product-fav" aria-label="Add to favorites" style="position:absolute;right:16px;top:10px;background:#fff;border-radius:50%;border:none;width:32px;height:32px;box-shadow:0 2px 8px rgba(0,0,0,0.07);font-size:1.2em;cursor:pointer;">&#9825;</button>
+          </div>
+          <div class="product-info" style="width:100%;margin-top:1em;">
+            <div class="product-title" style="font-size:1.1em;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${product.name}</div>
+            <div class="product-price-row" style="margin:0.5em 0;display:flex;align-items:center;gap:10px;justify-content:space-between;">
+              <span style="display:flex;align-items:center;gap:10px;">
+                <span class="product-price" style="font-size:1.2em;font-weight:700;color:#d33;">${product.price} AED</span>
+                ${product.oldPrice ? `<span class="product-old-price" style="text-decoration:line-through;color:#888;font-size:1em;">${product.oldPrice} AED</span>` : ''}
+              </span>
+              ${product.rating ? `<span class="product-rating" style="color:#f90;font-weight:600;">${product.rating} &#9733;</span>` : ''}
+            </div>
+            <div class="product-colors" style="margin-bottom:0.5em;">
+              ${(product.colors||[]).map(c=>`<span class='color-dot' style='display:inline-block;width:18px;height:18px;border-radius:50%;background:${c};margin:0 2px;border:1.5px solid #ccc;vertical-align:middle;'></span>`).join('')}
+            </div>
+            <div class="product-meta" style="display:flex;align-items:center;gap:10px;">
+              <span class="product-qty" style="color:#888;">Stock: ${product.quantity}</span>
+              <button class="product-cart" aria-label="Add to cart" style="background:#fff;border-radius:50%;border:1.5px solid #eee;width:32px;height:32px;box-shadow:0 2px 8px rgba(0,0,0,0.07);font-size:1.2em;cursor:pointer;">&#128722;</button>
+            </div>
+          </div>
+        </div>
+      `}).join('');
+    });
+  }
+
+  migrateExistingProducts(); // Call the migration function
+  renderTshirtProducts();
+});
+</script>
 </body>
 </html> 
