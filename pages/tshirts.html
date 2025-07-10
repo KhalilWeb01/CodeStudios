@@ -120,9 +120,15 @@
     <aside class="sidebar" id="sidebar">
       <button class="close-btn" id="closeSidebar" aria-label="Close menu">&times;</button>
       <ul class="sidebar-links">
-        <li><a href="#">Home</a></li>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../dashboard/dash.html">Dashboard</a></li>
         <li><a href="#">Cart</a></li>
         <li><a href="#">Me</a></li>
+        <li class="theme-toggle">
+          <button id="themeToggle" style="background:none;border:none;color:inherit;font-size:1.2em;padding:0.5em 1em;display:block;width:100%;text-align:left;cursor:pointer;">
+            🌙 Dark Mode
+          </button>
+        </li>
       </ul>
     </aside>
   </main>
@@ -239,27 +245,27 @@ document.addEventListener('DOMContentLoaded', function() {
     grid.innerHTML = products.map(product => {
       const discount = (product.oldPrice && product.price) ? calcDiscount(product.price, product.oldPrice) : null;
       return `
-      <div class="product-card" style="background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.07);padding:1em 1em 1.2em 1em;display:flex;flex-direction:column;align-items:center;position:relative;max-width:320px;margin:0 auto 2em auto;cursor:pointer;" onclick="window.location.href='../product.html?id=${product.id}'">
+      <div class="product-card" style="background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.07);padding:0.8em 0.8em 1em 0.8em;display:flex;flex-direction:column;align-items:center;position:relative;max-width:280px;margin:0 auto 1.5em auto;cursor:pointer;" onclick="window.location.href='../product.html?id=${product.id}'">
         <div class="product-image-wrap" style="width:100%;display:flex;justify-content:center;align-items:center;gap:4px;position:relative;">
-          ${discount ? `<div style='position:absolute;left:10px;top:10px;background:#f66;color:#fff;font-size:1em;padding:2px 10px;border-radius:7px;z-index:3;'>-${discount}%</div>` : ''}
-          ${product.photos && product.photos[0] ? `<img src="${product.photos[0]}" alt="product" style="width:100%;max-width:220px;max-height:220px;border-radius:10px;object-fit:cover;position:relative;z-index:1;">` : ''}
-          <button class="product-fav" aria-label="Add to favorites" style="position:absolute;right:16px;top:10px;background:#fff;border-radius:50%;border:none;width:32px;height:32px;box-shadow:0 2px 8px rgba(0,0,0,0.07);font-size:1.2em;cursor:pointer;z-index:3;" onclick="event.stopPropagation();">&#9825;</button>
+          ${discount ? `<div style='position:absolute;left:8px;top:8px;background:#f66;color:#fff;font-size:0.9em;padding:2px 8px;border-radius:6px;z-index:3;'>-${discount}%</div>` : ''}
+          ${product.photos && product.photos[0] ? `<img src="${product.photos[0]}" alt="product" style="width:100%;max-width:200px;max-height:200px;border-radius:8px;object-fit:cover;position:relative;z-index:1;">` : ''}
+          <button class="product-fav" aria-label="Add to favorites" style="position:absolute;right:12px;top:8px;background:#fff;border-radius:50%;border:none;width:28px;height:28px;box-shadow:0 2px 8px rgba(0,0,0,0.07);font-size:1.1em;cursor:pointer;z-index:3;" onclick="event.stopPropagation();">&#9825;</button>
         </div>
-        <div class="product-info" style="width:100%;margin-top:1em;">
-          <div class="product-title" style="font-size:1.1em;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${product.name}</div>
-          <div class="product-price-row" style="margin:0.5em 0;display:flex;align-items:center;gap:10px;justify-content:space-between;">
-            <span style="display:flex;align-items:center;gap:10px;">
-              <span class="product-price" style="font-size:1.2em;font-weight:700;color:#d33;">${product.price} AED</span>
-              ${product.oldPrice ? `<span class="product-old-price" style="text-decoration:line-through;color:#888;font-size:1em;">${product.oldPrice} AED</span>` : ''}
+        <div class="product-info" style="width:100%;margin-top:0.8em;">
+          <div class="product-title" style="font-size:1em;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${product.name}</div>
+          <div class="product-price-row" style="margin:0.4em 0;display:flex;align-items:center;gap:8px;justify-content:space-between;">
+            <span style="display:flex;align-items:center;gap:8px;">
+              <span class="product-price" style="font-size:1.1em;font-weight:700;color:#d33;">${product.price} AED</span>
+              ${product.oldPrice ? `<span class="product-old-price" style="text-decoration:line-through;color:#888;font-size:0.9em;">${product.oldPrice} AED</span>` : ''}
             </span>
-            ${product.rating ? `<span class="product-rating" style="color:#f90;font-weight:600;">${product.rating} &#9733;</span>` : ''}
+            ${product.rating ? `<span class="product-rating" style="color:#f90;font-weight:600;font-size:0.9em;">${product.rating} &#9733;</span>` : ''}
           </div>
-          <div class="product-colors" style="margin-bottom:0.5em;">
-            ${(product.colors||[]).map(c=>`<span class='color-dot' style='display:inline-block;width:18px;height:18px;border-radius:50%;background:${c};margin:0 2px;border:1.5px solid #ccc;vertical-align:middle;'></span>`).join('')}
+          <div class="product-colors" style="margin-bottom:0.4em;">
+            ${(product.colors||[]).map(c=>`<span class='color-dot' style='display:inline-block;width:16px;height:16px;border-radius:50%;background:${c};margin:0 2px;border:1.5px solid #ccc;vertical-align:middle;'></span>`).join('')}
           </div>
-          <div class="product-meta" style="display:flex;align-items:center;gap:10px;">
-            <span class="product-qty" style="color:#888;">Stock: ${product.quantity}</span>
-            <button class="product-cart" aria-label="Add to cart" style="background:#fff;border-radius:50%;border:1.5px solid #eee;width:32px;height:32px;box-shadow:0 2px 8px rgba(0,0,0,0.07);font-size:1.2em;cursor:pointer;" onclick="event.stopPropagation();">&#128722;</button>
+          <div class="product-meta" style="display:flex;align-items:center;gap:8px;">
+            <span class="product-qty" style="color:#888;font-size:0.9em;">Stock: ${product.quantity}</span>
+            <button class="product-cart" aria-label="Add to cart" style="background:#fff;border-radius:50%;border:1.5px solid #eee;width:28px;height:28px;box-shadow:0 2px 8px rgba(0,0,0,0.07);font-size:1.1em;cursor:pointer;" onclick="event.stopPropagation();">&#128722;</button>
           </div>
         </div>
       </div>
@@ -372,6 +378,36 @@ document.addEventListener('DOMContentLoaded', function() {
   migrateExistingProducts(); // Call the migration function
   addDemoProducts(); // Call the demo products function
   renderTshirtProducts();
+
+  // Theme toggle functionality
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
+  
+  function getTheme() {
+    return localStorage.getItem('theme') || 'light';
+  }
+  
+  function setTheme(theme) {
+    localStorage.setItem('theme', theme);
+    if (theme === 'dark') {
+      body.classList.add('dark-theme');
+      themeToggle.innerHTML = '☀️ Light Mode';
+    } else {
+      body.classList.remove('dark-theme');
+      themeToggle.innerHTML = '🌙 Dark Mode';
+    }
+  }
+  
+  // Initialize theme
+  setTheme(getTheme());
+  
+  // Theme toggle event
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      const currentTheme = getTheme();
+      setTheme(currentTheme === 'light' ? 'dark' : 'light');
+    });
+  }
 });
 </script>
 </body>
