@@ -133,6 +133,61 @@ function migrateExistingProducts() {
     setProducts(products);
   }
 }
+function addDemoProducts() {
+  const products = getProducts();
+  if (products.length === 0) {
+    const demoProducts = [
+      {
+        id: generateProductId(),
+        name: "Classic White T-Shirt",
+        price: 45.00,
+        oldPrice: 65.00,
+        description: "Premium cotton classic white t-shirt with comfortable fit.",
+        colors: ["#ffffff", "#000000", "#808080"],
+        quantity: 25,
+        category: "tshirt",
+        rating: 4.5,
+        photos: ["https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400&q=80"]
+      },
+      {
+        id: generateProductId(),
+        name: "Oversized Black Tee",
+        price: 55.00,
+        oldPrice: 75.00,
+        description: "Trendy oversized black t-shirt perfect for casual wear.",
+        colors: ["#000000", "#333333"],
+        quantity: 18,
+        category: "tshirt",
+        rating: 4.8,
+        photos: ["https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=400&q=80"]
+      },
+      {
+        id: generateProductId(),
+        name: "Striped Summer Tee",
+        price: 35.00,
+        description: "Lightweight striped t-shirt perfect for summer days.",
+        colors: ["#0000ff", "#ff0000", "#00ff00"],
+        quantity: 30,
+        category: "tshirt",
+        rating: 4.2,
+        photos: ["https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=400&q=80"]
+      },
+      {
+        id: generateProductId(),
+        name: "Premium Cotton V-Neck",
+        price: 65.00,
+        oldPrice: 85.00,
+        description: "High-quality cotton v-neck t-shirt with elegant design.",
+        colors: ["#ffffff", "#000000", "#8B4513"],
+        quantity: 15,
+        category: "tshirt",
+        rating: 4.7,
+        photos: ["https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=400&q=80"]
+      }
+    ];
+    setProducts(demoProducts);
+  }
+}
 function renderProducts() {
   const wrapper = document.querySelector('#section-product .products-area-wrapper');
   if (!wrapper) return;
@@ -284,5 +339,6 @@ if (addProductForm) {
 // Автоматический рендер при загрузке
 if (document.querySelector('#section-product')) {
   migrateExistingProducts();
+  addDemoProducts();
   renderProducts();
 }
