@@ -294,6 +294,63 @@
           <div class='product-description'><p>${product.description || 'No description available.'}</p></div>
           <div style='margin-top:1em;color:#888;font-size:0.9em;'>Stock: ${product.quantity} units</div>
         </div>
+        <div class="product-accordion" id="productAccordion">
+          <div class="accordion-item">
+            <button class="accordion-header" type="button">
+              <span class="accordion-icon"> <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg> </span>
+              <span class="accordion-title">DESCRIPTION</span>
+              <span class="accordion-value">100% Polyester</span>
+              <span class="accordion-arrow">&#9660;</span>
+            </button>
+            <div class="accordion-content">${product.description || 'No description available.'}</div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header" type="button">
+              <span class="accordion-icon"> <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> </span>
+              <span class="accordion-title">SECURE PAYMENT</span>
+              <span class="accordion-arrow">&#9660;</span>
+            </button>
+            <div class="accordion-content">All payments are processed securely. Your payment information is encrypted and protected.</div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header" type="button">
+              <span class="accordion-icon"> <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="7" width="20" height="13" rx="2"/><path d="M16 3h-1a2 2 0 0 0-2 2v2"/><circle cx="8.5" cy="14.5" r="1.5"/><circle cx="15.5" cy="14.5" r="1.5"/></svg> </span>
+              <span class="accordion-title">SHIPPING INFO</span>
+              <span class="accordion-arrow">&#9654;</span>
+            </button>
+            <div class="accordion-content">We offer worldwide shipping. Orders are processed within 1-2 business days and delivered within 5-10 business days depending on your location.</div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header" type="button">
+              <span class="accordion-icon"> <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg> </span>
+              <span class="accordion-title">RETURN POLICY</span>
+              <span class="accordion-arrow">&#9654;</span>
+            </button>
+            <div class="accordion-content">You can return any item within 14 days of delivery for a full refund. Items must be unused and in original packaging.</div>
+          </div>
+        </div>
+        <div class="product-reviews-block">
+          <div class="reviews-header-row">
+            <span class="reviews-title">REVIEWS <span class="reviews-count">(1082)</span></span>
+            <a href="#" class="reviews-view-more">VIEW MORE <span class="reviews-arrow">&#8250;</span></a>
+          </div>
+          <div class="reviews-summary">
+            <span class="reviews-average">4.8</span>
+            <span class="reviews-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+          <div class="review-item">
+            <div class="review-row">
+              <span class="review-author">F***A</span>
+              <span class="review-date">2025/06/30</span>
+            </div>
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="review-text">This is a great jumper. It's not super thick or warm but it's fine over another layer.</div>
+            <div class="review-photos">
+              <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=200&q=80" alt="review photo">
+            </div>
+          </div>
+        </div>
+        <div class="product-recommend-block" id="productRecommendBlock"></div>
       `;
 
       // Галерея dots
@@ -343,6 +400,74 @@
     
     loadProduct();
     
+    // Render recommendations
+    function renderRecommendations(currentProduct) {
+      const block = document.getElementById('productRecommendBlock');
+      if (!block) return;
+      const all = getProducts().filter(p => p.category === currentProduct.category && p.id !== currentProduct.id);
+      if (all.length === 0) {
+        block.innerHTML = '';
+        return;
+      }
+      // Shuffle and pick up to 4
+      const shuffled = all.sort(() => 0.5 - Math.random());
+      const recs = shuffled.slice(0, 4);
+      block.innerHTML = `
+        <div class="recommend-title">YOU MAY ALSO LIKE</div>
+        <div class="recommend-list">
+          ${recs.map(product => {
+            const discount = (product.oldPrice && product.price) ? Math.round(100 - (product.price / product.oldPrice) * 100) : null;
+            return `
+              <div class="recommend-card" onclick="window.location.href='product.html?id=${product.id}'">
+                ${discount ? `<div class='recommend-discount'>-${discount}%</div>` : ''}
+                <div class="recommend-img-wrap">
+                  ${product.photos && product.photos[0] ? `<img src="${product.photos[0]}" alt="product">` : ''}
+                  <button class="recommend-cart" onclick="event.stopPropagation();">&#128722;</button>
+                </div>
+                <div class="recommend-title-row">${product.name.length > 22 ? product.name.slice(0, 20) + '…' : product.name}</div>
+                <div class="recommend-price-row">
+                  <span class="recommend-price">${product.price} AED</span>
+                  ${product.oldPrice ? `<span class="recommend-old-price">${product.oldPrice} AED</span>` : ''}
+                  ${product.rating ? `<span class="recommend-rating">&#9733; ${product.rating}</span>` : ''}
+                </div>
+                <div class="recommend-colors">
+                  ${(product.colors||[]).slice(0,3).map(c=>`<span class='recommend-color-dot' style='background:${c}'></span>`).join('')}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    // After loadProduct, call renderRecommendations
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const products = getProducts();
+    const currentProduct = products.find(p => p.id === id);
+    if (currentProduct) renderRecommendations(currentProduct);
+
+    // Accordion logic
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.accordion-header')) {
+        const btn = e.target.closest('.accordion-header');
+        const item = btn.parentElement;
+        const content = item.querySelector('.accordion-content');
+        const arrow = btn.querySelector('.accordion-arrow');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.product-accordion .accordion-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.accordion-content').style.maxHeight = null;
+          i.querySelector('.accordion-arrow').innerHTML = '&#9660;';
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          content.style.maxHeight = content.scrollHeight + 'px';
+          arrow.innerHTML = '&#9650;';
+        }
+      }
+    });
+    
     // Theme toggle functionality
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
@@ -373,5 +498,408 @@
       });
     }
   </script>
+  <style>
+  .product-accordion {
+    margin: 2em 0 1em 0;
+    border-radius: 12px;
+    background: #fafbfc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    overflow: hidden;
+  }
+  .accordion-item + .accordion-item {
+    border-top: 1px solid #eee;
+  }
+  .accordion-header {
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1em;
+    font-size: 1.08em;
+    font-weight: 600;
+    color: #222;
+    padding: 1.1em 1.2em;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .accordion-header:hover {
+    background: #f0f4f8;
+  }
+  .accordion-icon {
+    display: flex;
+    align-items: center;
+    color: #888;
+    min-width: 28px;
+    justify-content: center;
+  }
+  .accordion-title {
+    flex: 1 1 auto;
+    text-align: left;
+    letter-spacing: 0.5px;
+  }
+  .accordion-value {
+    color: #666;
+    font-size: 0.98em;
+    margin-right: 1em;
+    font-weight: 400;
+  }
+  .accordion-arrow {
+    font-size: 1.2em;
+    color: #888;
+    margin-left: 0.5em;
+    transition: transform 0.2s;
+  }
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    background: #fff;
+    color: #222;
+    font-size: 1em;
+    padding: 0 1.2em;
+    transition: max-height 0.3s cubic-bezier(.4,1.2,.7,1.01);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+  .accordion-item.open .accordion-content {
+    padding: 1em 1.2em 1.2em 1.2em;
+    max-height: 300px;
+  }
+  .accordion-item.open .accordion-header {
+    background: #f0f4f8;
+  }
+  /* Dark theme */
+  .dark-theme .product-accordion {
+    background: #23272b;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  .dark-theme .accordion-header {
+    color: #fff;
+    background: none;
+  }
+  .dark-theme .accordion-header:hover,
+  .dark-theme .accordion-item.open .accordion-header {
+    background: #2a2d31;
+  }
+  .dark-theme .accordion-icon {
+    color: #bbb;
+  }
+  .dark-theme .accordion-value {
+    color: #aaa;
+  }
+  .dark-theme .accordion-arrow {
+    color: #bbb;
+  }
+  .dark-theme .accordion-content {
+    background: #23272b;
+    color: #fff;
+  }
+  </style>
+  <style>
+  .product-reviews-block {
+    margin: 2.5em 0 1.5em 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 1.5em 1.2em 1.2em 1.2em;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .reviews-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1em;
+  }
+  .reviews-title {
+    font-weight: 700;
+    font-size: 1.1em;
+    letter-spacing: 0.5px;
+  }
+  .reviews-count {
+    color: #888;
+    font-weight: 500;
+    font-size: 0.98em;
+    margin-left: 2px;
+  }
+  .reviews-view-more {
+    color: #222;
+    font-size: 1em;
+    text-decoration: none;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    transition: color 0.2s;
+  }
+  .reviews-view-more:hover {
+    color: #007aff;
+  }
+  .reviews-arrow {
+    font-size: 1.2em;
+    margin-left: 2px;
+  }
+  .reviews-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 1.2em;
+  }
+  .reviews-average {
+    font-size: 2.2em;
+    color: #e53935;
+    font-weight: 700;
+    margin-right: 0.2em;
+  }
+  .reviews-stars {
+    color: #ffb400;
+    font-size: 1.5em;
+    letter-spacing: 2px;
+  }
+  .review-item {
+    background: #fafbfc;
+    border-radius: 10px;
+    padding: 1em 1em 1.2em 1em;
+    margin-bottom: 0.5em;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  }
+  .review-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.2em;
+  }
+  .review-author {
+    font-weight: 700;
+    font-size: 1.05em;
+    letter-spacing: 1px;
+  }
+  .review-date {
+    color: #888;
+    font-size: 0.98em;
+    font-weight: 500;
+  }
+  .review-stars {
+    color: #ffb400;
+    font-size: 1.1em;
+    margin-bottom: 0.3em;
+  }
+  .review-text {
+    font-size: 1em;
+    color: #222;
+    margin-bottom: 0.7em;
+    margin-top: 0.2em;
+  }
+  .review-photos {
+    display: flex;
+    gap: 0.7em;
+  }
+  .review-photos img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1.5px solid #eee;
+    background: #fff;
+  }
+  /* Dark theme */
+  .dark-theme .product-reviews-block {
+    background: #23272b;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  .dark-theme .reviews-title {
+    color: #fff;
+  }
+  .dark-theme .reviews-count {
+    color: #aaa;
+  }
+  .dark-theme .reviews-view-more {
+    color: #fff;
+  }
+  .dark-theme .reviews-view-more:hover {
+    color: #8ec5fc;
+  }
+  .dark-theme .reviews-summary {
+    color: #fff;
+  }
+  .dark-theme .reviews-average {
+    color: #ffb400;
+  }
+  .dark-theme .review-item {
+    background: #2a2d31;
+    color: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  }
+  .dark-theme .review-author {
+    color: #fff;
+  }
+  .dark-theme .review-date {
+    color: #bbb;
+  }
+  .dark-theme .review-stars {
+    color: #ffe082;
+  }
+  .dark-theme .review-text {
+    color: #fff;
+  }
+  .dark-theme .review-photos img {
+    background: #23272b;
+    border-color: #444;
+  }
+  </style>
+  <style>
+  .recommend-title {
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 1em;
+    color: #222;
+    letter-spacing: 0.5px;
+  }
+  .recommend-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1em;
+  }
+  .recommend-card {
+    position: relative;
+    background: #fafbfc;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border: 1px solid #eee;
+  }
+  .recommend-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .recommend-discount {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e53935;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.8em;
+    font-weight: 600;
+    z-index: 1;
+  }
+  .recommend-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+  }
+  .recommend-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .recommend-cart {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #fff;
+    color: #222;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1em;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 2;
+  }
+  .recommend-title-row {
+    padding: 0.8em 1em;
+    font-size: 0.95em;
+    font-weight: 600;
+    color: #222;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .recommend-price-row {
+    padding: 0 1em 0.8em 1em;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #e53935;
+  }
+  .recommend-price {
+    color: #e53935;
+  }
+  .recommend-old-price {
+    color: #888;
+    text-decoration: line-through;
+    font-size: 0.9em;
+  }
+  .recommend-rating {
+    font-size: 0.9em;
+    color: #ffb400;
+    font-weight: 600;
+  }
+  .recommend-colors {
+    padding: 0 1em 0.8em 1em;
+    display: flex;
+    gap: 0.4em;
+    justify-content: flex-start;
+  }
+  .recommend-color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid #eee;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  /* Dark theme */
+  .dark-theme .recommend-card {
+    background: #2a2d31;
+    border: 1px solid #444;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  .dark-theme .recommend-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  }
+  .dark-theme .recommend-discount {
+    background: #e53935;
+    color: #fff;
+  }
+  .dark-theme .recommend-title-row {
+    color: #fff;
+  }
+  .dark-theme .recommend-price-row {
+    color: #ffb400;
+  }
+  .dark-theme .recommend-price {
+    color: #ffb400;
+  }
+  .dark-theme .recommend-old-price {
+    color: #aaa;
+  }
+  .dark-theme .recommend-rating {
+    color: #ffe082;
+  }
+  .dark-theme .recommend-colors .recommend-color-dot {
+    border-color: #444;
+    background: #2a2d31;
+  }
+  </style>
 </body>
 </html> 

@@ -74,10 +74,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const searchSuggestions = document.getElementById('searchSuggestions');
   let allProducts = [];
 
-  async function loadAllProducts() {
+  function loadAllProducts() {
     try {
-      const res = await fetch('products.json');
-      allProducts = await res.json();
+      const data = localStorage.getItem('products');
+      allProducts = data ? JSON.parse(data) : [];
     } catch { allProducts = []; }
   }
   loadAllProducts();
@@ -125,14 +125,14 @@ document.addEventListener('DOMContentLoaded', function() {
         searchSuggestions.innerHTML = '';
         return;
       }
-      const matches = allProducts.filter(p => p.title.toLowerCase().includes(query));
+      const matches = allProducts.filter(p => p.name.toLowerCase().includes(query));
       if (matches.length === 0) {
         searchSuggestions.innerHTML = '<div class="search-suggestion-item">No results</div>';
         searchSuggestions.style.display = 'block';
         return;
       }
       searchSuggestions.innerHTML = matches.map(p =>
-        `<div class="search-suggestion-item" data-id="${p.id}">${p.title}</div>`
+        `<div class="search-suggestion-item" data-id="${p.id}">${p.name}</div>`
       ).join('');
       searchSuggestions.style.display = 'block';
     });
@@ -351,5 +351,45 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     updateTimers();
     setInterval(updateTimers, 1000);
+  }
+
+  // Универсальный рендер для trousers, shorts, shoes
+  function renderCategoryProducts(category, gridId) {
+    const grid = document.getElementById(gridId);
+    if (!grid) return;
+    const products = allProducts.filter(p => p.category === category);
+    if (products.length === 0) {
+      grid.innerHTML = `<div style="padding:2em;">No ${category.charAt(0).toUpperCase() + category.slice(1)}s found.</div>`;
+      return;
+    }
+    grid.innerHTML = products.map(product => {
+      const discount = (product.oldPrice && product.price) ? calcDiscount(product.price, product.oldPrice) : null;
+      return `
+        <div class="product-card" style="background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.07);padding:0.8em 0.8em 1em 0.8em;display:flex;flex-direction:column;align-items:center;position:relative;max-width:280px;margin:0 auto 1.5em auto;cursor:pointer;" onclick="window.location.href='../product.html?id=${product.id}'">
+          <div class="product-image-wrap" style="width:100%;display:flex;justify-content:center;align-items:center;gap:4px;position:relative;">
+            ${discount ? `<div style='position:absolute;left:8px;top:8px;background:#f66;color:#fff;font-size:0.9em;padding:2px 8px;border-radius:6px;z-index:3;'>-${discount}%</div>` : ''}
+            ${product.photos && product.photos[0] ? `<img src="${product.photos[0]}" alt="product" style="width:100%;max-width:200px;max-height:200px;border-radius:8px;object-fit:cover;position:relative;z-index:1;">` : ''}
+            <button class="product-fav" aria-label="Add to favorites" style="position:absolute;right:12px;top:8px;background:#fff;border-radius:50%;border:none;width:28px;height:28px;box-shadow:0 2px 8px rgba(0,0,0,0.07);font-size:1.1em;cursor:pointer;z-index:3;" onclick="event.stopPropagation();">&#9825;</button>
+          </div>
+          <div class="product-info" style="width:100%;margin-top:0.8em;">
+            <div class="product-title" style="font-size:1em;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${product.name}</div>
+            <div class="product-price-row" style="margin:0.4em 0;display:flex;align-items:center;gap:8px;justify-content:space-between;">
+              <span style="display:flex;align-items:center;gap:8px;">
+                <span class="product-price" style="font-size:1.1em;font-weight:700;color:#d33;">${product.price} AED</span>
+                ${product.oldPrice ? `<span class="product-old-price" style="text-decoration:line-through;color:#888;font-size:0.9em;">${product.oldPrice} AED</span>` : ''}
+              </span>
+              ${product.rating ? `<span class="product-rating" style="color:#f90;font-weight:600;font-size:0.9em;">${product.rating} &#9733;</span>` : ''}
+            </div>
+            <div class="product-colors" style="margin-bottom:0.4em;">
+              ${(product.colors||[]).map(c=>`<span class='color-dot' style='display:inline-block;width:16px;height:16px;border-radius:50%;background:${c};margin:0 2px;border:1.5px solid #ccc;vertical-align:middle;'></span>`).join('')}
+            </div>
+            <div class="product-meta" style="display:flex;align-items:center;gap:8px;">
+              <span class="product-qty" style="color:#888;font-size:0.9em;">Stock: ${product.quantity}</span>
+              <button class="product-cart" aria-label="Add to cart" style="background:#fff;border-radius:50%;border:1.5px solid #eee;width:28px;height:28px;box-shadow:0 2px 8px rgba(0,0,0,0.07);font-size:1.1em;cursor:pointer;" onclick="event.stopPropagation();">&#128722;</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
   }
 }); 

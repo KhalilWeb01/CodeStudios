@@ -183,6 +183,42 @@ function addDemoProducts() {
         category: "tshirt",
         rating: 4.7,
         photos: ["https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=400&q=80"]
+      },
+      {
+        id: generateProductId(),
+        name: "Classic Black Trousers",
+        price: 89.99,
+        oldPrice: 129.99,
+        description: "Elegant black trousers perfect for formal occasions.",
+        colors: ["#000000", "#333333", "#666666"],
+        quantity: 20,
+        category: "trousers",
+        rating: 4.6,
+        photos: ["https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"]
+      },
+      {
+        id: generateProductId(),
+        name: "Casual Summer Shorts",
+        price: 49.99,
+        oldPrice: 79.99,
+        description: "Comfortable summer shorts for casual wear.",
+        colors: ["#ffffff", "#000000", "#808080"],
+        quantity: 35,
+        category: "shorts",
+        rating: 4.3,
+        photos: ["https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"]
+      },
+      {
+        id: generateProductId(),
+        name: "Sport Running Shoes",
+        price: 129.99,
+        oldPrice: 189.99,
+        description: "High-performance running shoes for athletes.",
+        colors: ["#ffffff", "#000000", "#ff0000"],
+        quantity: 15,
+        category: "shoes",
+        rating: 4.9,
+        photos: ["https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=400&q=80"]
       }
     ];
     setProducts(demoProducts);
