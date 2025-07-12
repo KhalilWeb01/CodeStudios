@@ -232,6 +232,7 @@ function renderProducts() {
   html += `<div class="products-header">
     <div class="product-cell image">Items<button class="sort-button"></button></div>
     <div class="product-cell category">Category<button class="sort-button"></button></div>
+    <div class="product-cell sizes">Sizes<button class="sort-button"></button></div>
     <div class="product-cell status-cell">Status<button class="sort-button"></button></div>
     <div class="product-cell sales">Sales<button class="sort-button"></button></div>
     <div class="product-cell stock">Stock<button class="sort-button"></button></div>
@@ -246,6 +247,7 @@ function renderProducts() {
         <span>${product.name}</span>
       </div>
       <div class="product-cell category"><span class="cell-label">Category:</span>${product.category}</div>
+      <div class="product-cell sizes"><span class="cell-label">Sizes:</span>${(product.sizes||[]).join(', ')}</div>
       <div class="product-cell status-cell"><span class="cell-label">Status:</span><span class="status active">Active</span></div>
       <div class="product-cell sales"><span class="cell-label">Sales:</span>0</div>
       <div class="product-cell stock"><span class="cell-label">Stock:</span>${product.quantity}</div>
@@ -281,6 +283,7 @@ function renderProducts() {
       document.getElementById('productDiscount').value = '';
       document.getElementById('productDescription').value = product.description;
       document.getElementById('productColor').value = (product.colors||[]).join(',');
+      document.getElementById('productSize').value = (product.sizes||[]).join(',');
       document.getElementById('productQuantity').value = product.quantity;
       document.getElementById('productCategory').value = product.category;
       document.getElementById('productRating').value = product.rating || '';
@@ -295,6 +298,8 @@ function renderProducts() {
         const description = document.getElementById('productDescription').value.trim();
         const colorRaw = document.getElementById('productColor').value.trim();
         const colors = colorRaw.split(',').map(c=>c.trim()).filter(Boolean);
+        const sizeRaw = document.getElementById('productSize').value.trim();
+        const sizes = sizeRaw.split(',').map(s=>s.trim()).filter(Boolean);
         const quantity = parseInt(document.getElementById('productQuantity').value);
         const category = document.getElementById('productCategory').value;
         const rating = parseFloat(document.getElementById('productRating').value) || null;
@@ -312,7 +317,7 @@ function renderProducts() {
           }
         }
         Promise.all(photoPromises).then(photos => {
-          const updated = { id: product.id || generateProductId(), name, price, oldPrice, discount, description, colors, quantity, category, rating, photos: (files.length > 0 ? photos : product.photos) };
+          const updated = { id: product.id || generateProductId(), name, price, oldPrice, discount, description, colors, sizes, quantity, category, rating, photos: (files.length > 0 ? photos : product.photos) };
           const products = getProducts();
           products[idx] = updated;
           setProducts(products);
@@ -323,7 +328,7 @@ function renderProducts() {
         });
         if (files.length === 0) {
           // Если фото не менялись
-          const updated = { id: product.id || generateProductId(), name, price, oldPrice, discount, description, colors, quantity, category, rating, photos: product.photos };
+          const updated = { id: product.id || generateProductId(), name, price, oldPrice, discount, description, colors, sizes, quantity, category, rating, photos: product.photos };
           const products = getProducts();
           products[idx] = updated;
           setProducts(products);
@@ -348,6 +353,8 @@ if (addProductForm) {
     const description = document.getElementById('productDescription').value.trim();
     const colorRaw = document.getElementById('productColor').value.trim();
     const colors = colorRaw.split(',').map(c=>c.trim()).filter(Boolean);
+    const sizeRaw = document.getElementById('productSize').value.trim();
+    const sizes = sizeRaw.split(',').map(s=>s.trim()).filter(Boolean);
     const quantity = parseInt(document.getElementById('productQuantity').value);
     const category = document.getElementById('productCategory').value;
     const rating = parseFloat(document.getElementById('productRating').value) || null;
@@ -364,7 +371,7 @@ if (addProductForm) {
     }
     Promise.all(photoPromises).then(photos => {
       const products = getProducts();
-      products.push({ id: generateProductId(), name, price, oldPrice, discount, description, colors, quantity, category, rating, photos });
+      products.push({ id: generateProductId(), name, price, oldPrice, discount, description, colors, sizes, quantity, category, rating, photos });
       setProducts(products);
       renderProducts();
       addProductModal.style.display = 'none';

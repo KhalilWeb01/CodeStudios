@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
     grid.innerHTML = products.map(product => {
       const discount = (product.oldPrice && product.price) ? calcDiscount(product.price, product.oldPrice) : null;
       return `
-        <div class="product-card" style="background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.07);padding:0.8em 0.8em 1em 0.8em;display:flex;flex-direction:column;align-items:center;position:relative;max-width:280px;margin:0 auto 1.5em auto;cursor:pointer;" onclick="window.location.href='../product.html?id=${product.id}'">
+        <div class="product-card" style="background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.07);padding:0.8em 0.8em 1em 0.8em;display:flex;flex-direction:column;align-items:center;position:relative;max-width:280px;min-height:420px;margin:0 auto 1.5em auto;cursor:pointer;" onclick="window.location.href='../product.html?id=${product.id}'">
           <div class="product-image-wrap" style="width:100%;display:flex;justify-content:center;align-items:center;gap:4px;position:relative;">
             ${discount ? `<div style='position:absolute;left:8px;top:8px;background:#f66;color:#fff;font-size:0.9em;padding:2px 8px;border-radius:6px;z-index:3;'>-${discount}%</div>` : ''}
             ${product.photos && product.photos[0] ? `<img src="${product.photos[0]}" alt="product" style="width:100%;max-width:200px;max-height:200px;border-radius:8px;object-fit:cover;position:relative;z-index:1;">` : ''}
@@ -376,9 +376,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="product-price-row" style="margin:0.4em 0;display:flex;align-items:center;gap:8px;justify-content:space-between;">
               <span style="display:flex;align-items:center;gap:8px;">
                 <span class="product-price" style="font-size:1.1em;font-weight:700;color:#d33;">${product.price} AED</span>
-                ${product.oldPrice ? `<span class="product-old-price" style="text-decoration:line-through;color:#888;font-size:0.9em;">${product.oldPrice} AED</span>` : ''}
+                <span class="product-old-price" style="text-decoration:line-through;color:#888;font-size:0.9em;">${product.oldPrice ? product.oldPrice + ' AED' : ''}</span>
               </span>
-              ${product.rating ? `<span class="product-rating" style="color:#f90;font-weight:600;font-size:0.9em;">${product.rating} &#9733;</span>` : ''}
+              <span class="product-rating" style="color:#f90;font-weight:600;font-size:0.9em;">${product.rating ? product.rating + ' &#9733;' : ''}</span>
             </div>
             <div class="product-colors" style="margin-bottom:0.4em;">
               ${(product.colors||[]).map(c=>`<span class='color-dot' style='display:inline-block;width:16px;height:16px;border-radius:50%;background:${c};margin:0 2px;border:1.5px solid #ccc;vertical-align:middle;'></span>`).join('')}

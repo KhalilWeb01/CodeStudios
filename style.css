@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Courier New', monospace;
     background: #fff;
     color: #222;
 }
@@ -1004,7 +1004,7 @@ footer .subscribe .terms {
   margin: 2.2em 0 2.2em 2.2em;
 }
 .promo-slide-title {
-  font-family: 'Montserrat', Arial, sans-serif;
+  font-family: 'Courier New', monospace;
   font-size: 1.1em;
   font-weight: 700;
   margin: 0 0 0.1em 0;
@@ -1036,7 +1036,7 @@ footer .subscribe .terms {
   margin-bottom: 0.1em;
 }
 .promo-slide-timer {
-  font-family: 'Montserrat', Arial, sans-serif;
+  font-family: 'Courier New', monospace;
   font-size: 0.95em;
   color: #ffe082;
   font-weight: 600;
