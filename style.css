@@ -151,6 +151,251 @@ header nav {
     color: #222;
 }
 
+/* Dropdown menu styles */
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-dropdown-btn {
+    background: none;
+    border: none;
+    color: #222;
+    font-family: 'Courier New', monospace;
+    font-size: 1em;
+    cursor: pointer;
+    padding: 0.5em 1em;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    transition: color 0.2s;
+}
+
+.nav-dropdown-btn:hover {
+    color: #666;
+}
+
+.nav-dropdown-btn .dropdown-arrow {
+    transition: transform 0.2s;
+}
+
+.nav-dropdown-btn.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.nav-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    min-width: 200px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.nav-dropdown-content.show {
+    display: block;
+    animation: dropdownFadeIn 0.2s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nav-dropdown-content a {
+    color: #222;
+    padding: 0.8em 1.2em;
+    text-decoration: none;
+    display: block;
+    transition: background 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.nav-dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.nav-dropdown-content a:hover {
+    background: #f8f8f8;
+    color: #000;
+}
+
+/* Dark theme support for dropdown */
+.dark-theme .nav-dropdown-btn {
+    color: #fff;
+}
+
+.dark-theme .nav-dropdown-btn:hover {
+    color: #ccc;
+}
+
+.dark-theme .nav-dropdown-content {
+    background: #2a2a2a;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.dark-theme .nav-dropdown-content a {
+    color: #fff;
+    border-bottom: 1px solid #444;
+}
+
+.dark-theme .nav-dropdown-content a:hover {
+    background: #3a3a3a;
+    color: #fff;
+}
+
+/* Sidebar dropdown styles */
+.sidebar-dropdown {
+    position: relative;
+}
+
+.sidebar-dropdown-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    font-family: 'Courier New', monospace;
+    font-size: 1em;
+    cursor: pointer;
+    padding: 0.5em 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+    transition: background 0.2s;
+}
+
+.sidebar-dropdown-btn:hover {
+    background: rgb(244, 238, 238);
+}
+
+.sidebar-dropdown-btn .dropdown-arrow {
+    transition: transform 0.2s;
+}
+
+.sidebar-dropdown-btn.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.sidebar-dropdown-content {
+    display: none;
+    background: rgb(251, 251, 251);
+    overflow: hidden;
+}
+
+.sidebar-dropdown-content.show {
+    display: block;
+    animation: sidebarDropdownFadeIn 0.2s ease-out;
+}
+
+@keyframes sidebarDropdownFadeIn {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 200px;
+    }
+}
+
+.sidebar-dropdown-content a {
+    color: inherit;
+    padding: 0.6em 1em 0.6em 2em;
+    text-decoration: none;
+    display: block;
+    transition: background 0.2s;
+    font-size: 0.9em;
+}
+
+.sidebar-dropdown-content a:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Dark theme support for sidebar dropdown */
+.dark-theme .sidebar-dropdown-btn:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.dark-theme .sidebar-dropdown-content {
+    background: rgba(255,255,255,0.05);
+}
+
+.dark-theme .sidebar-dropdown-content a:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Scroll animations */
+.scroll-animate {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-animate.from-left {
+    transform: translateX(-100px);
+}
+
+.scroll-animate.from-right {
+    transform: translateX(100px);
+}
+
+.scroll-animate.from-bottom {
+    transform: translateY(100px);
+}
+
+.scroll-animate.from-top {
+    transform: translateY(-100px);
+}
+
+.scroll-animate.scale-in {
+    transform: scale(0.8);
+}
+
+.scroll-animate.rotate-in {
+    transform: rotate(-10deg) scale(0.9);
+}
+
+.scroll-animate.animate-in {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+}
+
+/* Stagger animation delays for multiple elements */
+.scroll-animate.stagger-1 { transition-delay: 0.1s; }
+.scroll-animate.stagger-2 { transition-delay: 0.2s; }
+.scroll-animate.stagger-3 { transition-delay: 0.3s; }
+.scroll-animate.stagger-4 { transition-delay: 0.4s; }
+.scroll-animate.stagger-5 { transition-delay: 0.5s; }
+
+/* Special animations for specific elements */
+.category-card.scroll-animate {
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card.scroll-animate {
+    transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.promo-slider.scroll-animate {
+    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
 .categories {
     padding: 2em 1em 1em 1em;
     text-align: center;
@@ -1566,3 +1811,219 @@ footer .subscribe .terms {
     height: 14px !important;
   }
 } 
+
+/* Bottom Navigation Bar */
+.bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1002;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #fff;
+    border-top: 1.5px solid #e0e0e0;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.04);
+    height: 64px;
+    padding: 0 8px;
+}
+.bottom-nav-item {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #222;
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
+    font-size: 0.98em;
+    transition: color 0.18s;
+    padding: 6px 0 0 0;
+    border-radius: 8px 8px 0 0;
+}
+.bottom-nav-item:active, .bottom-nav-item:focus {
+    color: #1976d2;
+    background: #f5f7fa;
+}
+.bottom-nav-item.active, .bottom-nav-item[aria-current="page"] {
+    color: #1976d2;
+}
+.bottom-nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2px;
+}
+.bottom-nav-label {
+    font-size: 0.92em;
+    margin-top: 2px;
+    letter-spacing: 0.01em;
+}
+@media (min-width: 701px) {
+    .bottom-nav {
+        display: none !important;
+    }
+}
+@media (max-width: 700px) {
+    body {
+        padding-bottom: 68px;
+    }
+}
+.dark-theme .bottom-nav {
+    background: #232425;
+    border-top: 1.5px solid #333;
+}
+.dark-theme .bottom-nav-item {
+    color: #fff;
+}
+.dark-theme .bottom-nav-item:active, .dark-theme .bottom-nav-item:focus {
+    color: #8ec5fc;
+    background: #232425;
+}
+.dark-theme .bottom-nav-item.active, .dark-theme .bottom-nav-item[aria-current="page"] {
+    color: #8ec5fc;
+} 
+/* Login */
+
+
+
+.Main_cont{
+  background-image: url(resourse/Img/hoodies-sweatshirts-data.jpg);
+  height: 600px;
+  background-position: center;
+  background-size: cover;
+
+}
+
+/* --- DARK THEME UNIVERSAL FIXES --- */
+.dark-theme, .dark-theme body, .dark-theme main, .dark-theme aside, .dark-theme .sidebar {
+  background: #18191a !important;
+  color: #f3f3f3 !important;
+}
+.dark-theme header nav, .dark-theme .navbar-flex {
+  background: #111 !important;
+  color: #fff !important;
+}
+.dark-theme .modal-content,
+.dark-theme .product-card,
+.dark-theme .category-card,
+.dark-theme .products-carousel-section,
+.dark-theme .main-banner,
+.dark-theme .cart-item,
+.dark-theme .modal-body {
+  background: #23272b !important;
+  color: #fff !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18) !important;
+}
+.dark-theme .modal-header,
+.dark-theme .cart-summary,
+.dark-theme .cart-item {
+  border-color: #333 !important;
+}
+.dark-theme .btn,
+.dark-theme .btn-primary {
+  background: #23272b !important;
+  color: #fff !important;
+  border: 1.5px solid #444 !important;
+}
+.dark-theme .btn-primary:hover {
+  background: #333 !important;
+}
+.dark-theme input,
+.dark-theme textarea {
+  background: #23272b !important;
+  color: #fff !important;
+  border: 1.5px solid #444 !important;
+}
+.dark-theme .notification {
+  background: #23272b !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25) !important;
+}
+.dark-theme .notification.success {
+  background: #28a745 !important;
+  color: #fff !important;
+}
+.dark-theme .notification.error {
+  background: #dc3545 !important;
+  color: #fff !important;
+}
+.dark-theme .notification.warning {
+  background: #ffc107 !important;
+  color: #212529 !important;
+}
+.dark-theme .sidebar {
+  background: #23272b !important;
+  color: #fff !important;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.18) !important;
+}
+.dark-theme .sidebar-links li a,
+.dark-theme .sidebar-dropdown-content a {
+  color: #fff !important;
+}
+.dark-theme .sidebar-dropdown-content {
+  background: #23272b !important;
+}
+.dark-theme .sidebar-dropdown-content a:hover {
+  background: #2a2d31 !important;
+}
+.dark-theme .bottom-nav {
+  background: #23272b !important;
+  border-top: 1.5px solid #333 !important;
+}
+.dark-theme .bottom-nav-link {
+  color: #fff !important;
+}
+.dark-theme .bottom-nav-link:active,
+.dark-theme .bottom-nav-link:focus {
+  color: #8ec5fc !important;
+}
+.dark-theme .main-banner .banner-title,
+.dark-theme .main-banner .banner-subtitle,
+.dark-theme .main-banner .banner-x,
+.dark-theme .main-banner .banner-content,
+.dark-theme .main-banner .banner-text-small,
+.dark-theme .main-banner .banner-text-large,
+.dark-theme .main-banner .banner-text-shop {
+  color: #fff !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.45);
+}
+.dark-theme .category-card {
+  background: #23272b !important;
+  color: #fff !important;
+}
+.dark-theme .product-card {
+  background: #23272b !important;
+  color: #fff !important;
+  border: 1.5px solid #333 !important;
+}
+.dark-theme .product-card-title,
+.dark-theme .product-card-label,
+.dark-theme .product-card-price,
+.dark-theme .product-card-oldprice {
+  color: #fff !important;
+}
+.dark-theme .cart-item {
+  background: #23272b !important;
+  color: #fff !important;
+}
+.dark-theme .modal-header h3,
+.dark-theme .modal-header {
+  color: #fff !important;
+}
+.dark-theme .footer-links li a,
+.dark-theme footer a,
+.dark-theme footer .subscribe h3,
+.dark-theme footer .subscribe p,
+.dark-theme footer .subscribe label {
+  color: #fff !important;
+}
+.dark-theme footer {
+  background: #18191a !important;
+  color: #f3f3f3 !important;
+}
+.dark-theme .cart-badge {
+  background: #e74c3c !important;
+  color: #fff !important;
+}
