@@ -8,236 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-      /* Cart Badge */
-      .cart-badge {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        background: #e74c3c;
-        color: white;
-        border-radius: 50%;
-        width: 18px;
-        height: 18px;
-        font-size: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-      }
-
-      /* Modal Styles */
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.5);
-      }
-
-      .modal-content {
-        background-color: #fefefe;
-        margin: 5% auto;
-        padding: 0;
-        border-radius: 12px;
-        width: 90%;
-        max-width: 500px;
-        max-height: 80vh;
-        overflow-y: auto;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-      }
-    
-
-      .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        border-bottom: 1px solid #eee;
-      }
-
-      .modal-header h3 {
-        margin: 0;
-        font-size: 1.2em;
-        font-weight: 600;
-      }
-
-      .close {
-        color: #aaa;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-
-      .close:hover {
-        color: #000;
-      }
-
-      .modal-body {
-        padding: 20px;
-      }
-
-      .cart-item {
-        display: flex;
-        align-items: center;
-        padding: 15px 0;
-        border-bottom: 1px solid #eee;
-      }
-
-      .cart-item:last-child {
-        border-bottom: none;
-      }
-
-      .cart-item-image {
-        width: 60px;
-        height: 60px;
-        border-radius: 8px;
-        object-fit: cover;
-        margin-right: 15px;
-      }
-
-      .cart-item-info {
-        flex: 1;
-      }
-
-      .cart-item-name {
-        font-weight: 600;
-        margin-bottom: 5px;
-      }
-
-      .cart-item-price {
-        color: #d33;
-        font-weight: 600;
-      }
-
-      .cart-item-quantity {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 10px;
-      }
-
-      .quantity-btn {
-        background: #f8f9fa;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-      }
-
-      .quantity-btn:hover {
-        background: #e9ecef;
-      }
-
-      .cart-summary {
-        margin-top: 20px;
-        padding-top: 20px;
-        border-top: 2px solid #eee;
-      }
-
-      .summary-item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-      }
-
-      .summary-item.total {
-        font-weight: 600;
-        font-size: 1.1em;
-        color: #d33;
-      }
-
-      .btn {
-        padding: 12px 24px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .btn-primary {
-        background: #4a90e2;
-        color: white;
-      }
-
-      .btn-primary:hover {
-        background: #357abd;
-      }
-
-      .btn-large {
-        width: 100%;
-        justify-content: center;
-        margin-top: 15px;
-      }
-
-      /* Notification */
-      .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: #4a90e2;
-        color: white;
-        padding: 15px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 1001;
-        transform: translateX(400px);
-        transition: transform 0.3s ease;
-      }
-
-      .notification.show {
-        transform: translateX(0);
-      }
-
-      .notification.success {
-        background: #28a745;
-      }
-
-      .notification.error {
-        background: #dc3545;
-      }
-
-      .notification.warning {
-        background: #ffc107;
-        color: #212529;
-      }
-
-      /* Dark theme modal */
-      .dark-theme .modal-content {
-        background-color: #2d2d2d;
-        color: #ffffff;
-      }
-
-      .dark-theme .modal-header {
-        border-bottom: 1px solid #3d3d3d;
-      }
-
-      .dark-theme .cart-item {
-        border-bottom: 1px solid #3d3d3d;
-      }
-
-      .dark-theme .cart-summary {
-        border-top: 2px solid #3d3d3d;
-      }
-
-      .dark-theme .quantity-btn {
-        background: #3d3d3d;
-        border: 1px solid #4d4d4d;
-        color: #ffffff;
-      }
-
-      .dark-theme .quantity-btn:hover {
-        background: #4d4d4d;
-      }
-
-      /* Banner Styles */
+      /* Banner Styles (moved general UI to CSS file; keep only home-specific overrides if needed) */
       .main-banner {
         position: relative;
         height: 500px; /* Adjust as needed */
@@ -271,9 +42,7 @@
         z-index: 10;
       }
 
-      .banner-logo {
-        /* Add logo SVG here if needed */
-      }
+      /* .banner-lo go placeholder removed */
 
       .banner-title {
         font-size: 3.5em;
@@ -295,7 +64,23 @@
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
       }
 
-      /* Category horizontal scroll styles */
+      /* Desktop Banner Enhancements */
+      @media (min-width: 1000px) {
+        .main-banner {
+          height: 600px;
+          margin-bottom: 60px;
+        }
+        
+        .banner-title {
+          font-size: 4.5em;
+        }
+        
+        .banner-subtitle {
+          font-size: 2.2em;
+        }
+      }
+
+      /* Category horizontal scroll styles (home only) */
       .category-list {
         display: flex;
         flex-direction: row;
@@ -387,7 +172,7 @@
         padding-bottom: 2px;
         cursor: pointer;
       }
-      /* Products carousel styles */
+      /* Products carousel styles (home only) */
       .products-carousel-section {
         margin: 48px 0 0 0;
       }
@@ -452,6 +237,43 @@
       }
       .products-carousel::-webkit-scrollbar {
         display: none;
+      }
+
+      /* Desktop Product Grid */
+      @media (min-width: 1000px) {
+        .products-carousel {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 30px;
+          overflow-x: visible;
+          padding: 20px 0 40px 0;
+        }
+        
+        .product-card {
+          min-width: auto;
+          max-width: none;
+          padding: 0 0 20px 0;
+        }
+        
+        .category-list {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 30px;
+          justify-items: center;
+        }
+        
+        .category-card {
+          width: 100%;
+          max-width: 350px;
+        }
+        
+        .categories {
+          padding: 3em 0 2em 0;
+        }
+        
+        .products-carousel-section {
+          margin: 60px 0 0 0;
+        }
       }
       .product-card {
         min-width: 210px;
@@ -629,38 +451,78 @@
     </style>
 </head>
 
-<body>
+<body class="home">
     <header>
         <nav class="navbar-flex">
             <button class="menu-btn" id="openSidebar" aria-label="Open menu">
                 <span></span><span></span><span></span>
             </button>
-            <div class="brand-logo-wrap">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <svg width="64" height="64" viewBox="0 0 64 64">
-                            <!-- Круг с разрывами слева и справа -->
-                            <path class="logo-arc-top" d="M 14 29 a 20 20 0 1 1 40 0" stroke="#221C19"
-                                stroke-width="6" fill="none" stroke-linecap="butt" />
-                            <!-- Нижняя дуга с укороченными краями -->
-                            <path class="logo-arc-bottom" d="M 14 35 a 20.5 21 0 0 0  40 0" stroke="#221C19"
-                                stroke-width="6" fill="none" stroke-linecap="butt" />
-                            <!-- Вертикальная линия -->
-                            <line class="logo-vert" x1="32" y1="12" x2="32" y2="52" stroke="#221C19" stroke-width="6" stroke-linecap="butt" />
-                            <!-- Горизонтальная линия справа -->
-                            <line class="logo-horiz" x1="32" y1="32" x2="52" y2="32" stroke="#221C19" stroke-width="6" stroke-linecap="butt" />
-                        </svg>
-                    </div>
+            <!-- Mobile centered logo -->
+            <a href="index.html" class="mobile-logo" aria-label="Home">
+              <span class="logo-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 64 64">
+                  <path class="logo-arc-top" d="M 14 29 a 20 20 0 1 1 40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
+                  <path class="logo-arc-bottom" d="M 14 35 a 20.5 21 0 0 0  40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
+                  <line class="logo-vert" x1="32" y1="12" x2="32" y2="52" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
+                  <line class="logo-horiz" x1="32" y1="32" x2="52" y2="32" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
+                </svg>
+              </span>
+              <span class="mobile-brand-text">Code Studios</span>
+            </a>
+
+            <!-- Brand logo + name (desktop like in pages/tshirts.html) -->
+            <div class="brand-logo-wrap brand-logo-main" onclick="location.href='index.html'" style="cursor:pointer;">
+              <div class="logo">
+                <div class="logo-icon">
+                  <svg width="64" height="64" viewBox="0 0 64 64">
+                    <path class="logo-arc-top" d="M 14 29 a 20 20 0 1 1 40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
+                    <path class="logo-arc-bottom" d="M 14 35 a 20.5 21 0 0 0  40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
+                    <line class="logo-vert" x1="32" y1="12" x2="32" y2="52" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
+                    <line class="logo-horiz" x1="32" y1="32" x2="52" y2="32" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
+                  </svg>
                 </div>
-                <span class="brand-name">Code Studios</span>
+              </div>
+              <span class="brand-name">Code Studios</span>
             </div>
 
-            <button class="search-btn" aria-label="Search">
-                <svg class="search-icon" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="7" />
-                    <line x1="18" y1="18" x2="15.5" y2="15.5" />
+            <!-- Desktop Navigation Menu -->
+            <nav class="desktop-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="nav-dropdown">
+                        <button class="nav-dropdown-btn" id="categoriesDropdown">
+                            Categories
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="nav-dropdown-content" id="categoriesDropdownContent">
+                            <a href="pages/tshirts.html">T-shirts</a>
+                            <a href="pages/shirts.html">Shirts</a>
+                            <a href="pages/trousers.html">Trousers</a>
+                            <a href="pages/shorts.html">Shorts</a>
+                            <a href="pages/shoes.html">Shoes</a>
+                        </div>
+                    </li>
+                    <li><a href="dashboard/dash.html">Dashboard</a></li>
+                    <li><a href="#" onclick="showCart()">Cart</a></li>
+                    <li><a href="pages/profile.html">Profile</a></li>
+                    <li>
+                        <button id="desktopThemeToggle" class="theme-toggle-btn">
+                            🌙 Dark Mode
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="search-box-wrap" style="position:relative;display:inline-block;">
+              <button class="search-btn" aria-label="Search">
+                <svg class="search-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="18" y1="18" x2="15.5" y2="15.5" />
                 </svg>
-            </button>
+              </button>
+              <input type="text" class="search-input-box" id="searchInputBox" placeholder="Search products..." style="display:none;">
+              <div class="search-suggestions" id="searchSuggestions" style="display:none;"></div>
+            </div>
         </nav>
     </header>
     <!-- Sidebar для работы кнопки меню -->
@@ -703,31 +565,35 @@
           <h2 class="banner-subtitle">STUDIOS</h2>
         </div>
       </div>
-      <section class="categories">
-        <h2 class="scroll-animate from-left">SHOP BY CATEGORY</h2>
-        <div class="category-list">
-          <a class="category-card scroll-animate from-bottom stagger-1" href="pages/tshirts.html">
-            <img src="resourse/Img/tops-t-shirts-data.jpg" alt="T-shirts">
-            <span>T-shirts</span>
-          </a>
-          <a class="category-card scroll-animate from-bottom stagger-2" href="pages/shirts.html">
-            <img src="resourse/Img/shirts-data.jpg" alt="Shirts">
-            <span>Shirts</span>
-          </a>
-          <a class="category-card scroll-animate from-bottom stagger-3" href="pages/trousers.html">
-            <img src="resourse/Img/trousers-chinos-data.jpg" alt="Trousers">
-            <span>Trousers</span>
-          </a>
-          <a class="category-card scroll-animate from-bottom stagger-4" href="pages/shorts.html">
-            <img src="resourse/Img/short.webp" alt="Shorts">
-            <span>Shorts</span>
-          </a>
-          <a class="category-card scroll-animate from-bottom stagger-5" href="pages/shoes.html">
-            <img src="resourse/Img/716979.webp" alt="Shoes">
-            <span>Shoes</span>
-          </a>
-        </div>
-      </section>
+      
+      <div class="main-container">
+        <section class="categories">
+          <h2 class="scroll-animate from-left">SHOP BY CATEGORY</h2>
+          <div class="category-list">
+            <a class="category-card scroll-animate from-bottom stagger-1" href="pages/tshirts.html">
+              <img src="resourse/Img/tops-t-shirts-data.jpg" alt="T-shirts">
+              <span>T-shirts</span>
+            </a>
+            <a class="category-card scroll-animate from-bottom stagger-2" href="pages/shirts.html">
+              <img src="resourse/Img/shirts-data.jpg" alt="Shirts">
+              <span>Shirts</span>
+            </a>
+            <a class="category-card scroll-animate from-bottom stagger-3" href="pages/trousers.html">
+              <img src="resourse/Img/trousers-chinos-data.jpg" alt="Trousers">
+              <span>Trousers</span>
+            </a>
+            <a class="category-card scroll-animate from-bottom stagger-4" href="pages/shorts.html">
+              <img src="resourse/Img/short.webp" alt="Shorts">
+              <span>Shorts</span>
+            </a>
+            <a class="category-card scroll-animate from-bottom stagger-5" href="pages/shoes.html">
+              <img src="resourse/Img/716979.webp" alt="Shoes">
+              <span>Shoes</span>
+            </a>
+          </div>
+        </section>
+      </div>
+      
       <div class="main-banner second-banner">
         <img src="resourse/Img/hoodies-sweatshirts-data.jpg" alt="Who Move Different Banner" class="banner-img">
         <div class="banner-content banner-content-center">
@@ -736,37 +602,97 @@
           <div class="banner-text-shop">SHOP NOW</div>
         </div>
       </div>
-      <section class="products-carousel-section">
-        <div class="products-carousel-tabs">
-          <button class="carousel-tab active" data-category="essentials">Essentials</button>
-          <button class="carousel-tab" data-category="tshirts">T-shirts</button>
-          <button class="carousel-tab" data-category="shorts">Shorts</button>
-        </div>
-        <div class="products-carousel" id="productsCarousel">
-          <!-- JS will insert product cards here -->
-        </div>
-        <div class="products-carousel-footer">
-          <button class="view-more-btn">View More</button>
-        </div>
-      </section>
+      
+      <div class="main-container">
+        <section class="products-carousel-section">
+          <div class="products-carousel-tabs">
+            <button class="carousel-tab active" data-category="essentials">Essentials</button>
+            <button class="carousel-tab" data-category="tshirts">T-shirts</button>
+            <button class="carousel-tab" data-category="shorts">Shorts</button>
+          </div>
+          <div class="products-carousel" id="productsCarousel">
+            <!-- JS will insert product cards here -->
+          </div>
+          <div class="products-carousel-footer">
+            <button class="view-more-btn">View More</button>
+          </div>
+        </section>
+      </div>
     </main>
     <footer>
-        <section class="subscribe scroll-animate from-bottom stagger-1">
-            <h3>Join our mailing list</h3>
-            <form>
-                <input type="email" placeholder="Your Email" required>
-                <button type="submit">Subscribe</button>
-            </form>
-            <p class="terms">By continuing, you agree to our <a href="#">Terms Of Use</a> and <a href="#">Privacy & Cookie Policy</a>.</p>
-        </section>
-        <ul class="footer-links scroll-animate from-bottom stagger-2">
-            <li><a href="#">Shipping Info</a></li>
-            <li><a href="#">Terms & Conditions</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Return Policy</a></li>
-            <li><a href="#">Contact Us</a></li>
-        </ul>
-        <p class="scroll-animate from-bottom stagger-3">© 2025 Sumwon-ALL RIGHTS RESERVED</p>
+        <div class="footer-content">
+            <section class="subscribe scroll-animate from-bottom stagger-1">
+                <h3>Join our mailing list</h3>
+                <form>
+                    <input type="email" placeholder="Your Email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+                <p class="terms">By continuing, you agree to our <a href="#">Terms Of Use</a> and <a href="#">Privacy & Cookie Policy</a>.</p>
+            </section>
+            
+            <div class="footer-sections">
+                <div class="footer-section">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="pages/tshirts.html">T-shirts</a></li>
+                        <li><a href="pages/shirts.html">Shirts</a></li>
+                        <li><a href="pages/trousers.html">Trousers</a></li>
+                        <li><a href="pages/shorts.html">Shorts</a></li>
+                        <li><a href="pages/shoes.html">Shoes</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Affiliates</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <ul class="footer-links scroll-animate from-bottom stagger-2">
+                <li><a href="#">Shipping Info</a></li>
+                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Return Policy</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p class="scroll-animate from-bottom stagger-3">© 2025 Code Studios - ALL RIGHTS RESERVED</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook">📘</a>
+                <a href="#" aria-label="Instagram">📷</a>
+                <a href="#" aria-label="Twitter">🐦</a>
+                <a href="#" aria-label="YouTube">📺</a>
+            </div>
+        </div>
     </footer>
     <!-- Bottom Navigation Bar -->
     <nav class="bottom-nav">
@@ -939,6 +865,47 @@
         themeToggle.addEventListener('click', function() {
           const currentTheme = getTheme();
           setTheme(currentTheme === 'light' ? 'dark' : 'light');
+        });
+      }
+
+      // Desktop theme toggle
+      const desktopThemeToggle = document.getElementById('desktopThemeToggle');
+      if (desktopThemeToggle) {
+        desktopThemeToggle.addEventListener('click', function() {
+          const currentTheme = getTheme();
+          setTheme(currentTheme === 'light' ? 'dark' : 'light');
+        });
+      }
+
+      // Sync theme toggle text
+      function updateThemeToggleText(theme) {
+        const text = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+        if (themeToggle) themeToggle.innerHTML = text;
+        if (desktopThemeToggle) desktopThemeToggle.innerHTML = text;
+      }
+
+      // Update setTheme function to sync both toggles
+      const originalSetTheme = setTheme;
+      setTheme = function(theme) {
+        originalSetTheme(theme);
+        updateThemeToggleText(theme);
+      };
+
+      // Desktop dropdown functionality
+      const categoriesDropdown = document.getElementById('categoriesDropdown');
+      const categoriesDropdownContent = document.getElementById('categoriesDropdownContent');
+
+      if (categoriesDropdown && categoriesDropdownContent) {
+        categoriesDropdown.addEventListener('click', function(e) {
+          e.stopPropagation();
+          categoriesDropdownContent.classList.toggle('show');
+          categoriesDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+          categoriesDropdownContent.classList.remove('show');
+          categoriesDropdown.classList.remove('active');
         });
       }
 

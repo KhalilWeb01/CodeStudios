@@ -11,29 +11,75 @@
 </head>
 <body>
     <header>
-        <nav class="navbar-flex">
+         <nav class="navbar-flex">
             <button class="menu-btn" id="openSidebar" aria-label="Open menu">
                 <span></span><span></span><span></span>
             </button>
-            <div class="brand-logo-wrap">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <svg width="64" height="64" viewBox="0 0 64 64">
-                            <path class="logo-arc-top" d="M 14 29 a 20 20 0 1 1 40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
-                            <path class="logo-arc-bottom" d="M 14 35 a 20.5 21 0 0 0  40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
-                            <line class="logo-vert" x1="32" y1="12" x2="32" y2="52" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
-                            <line class="logo-horiz" x1="32" y1="32" x2="52" y2="32" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
-                        </svg>
-                    </div>
+            <!-- Mobile centered logo -->
+            <a href="index.html" class="mobile-logo" aria-label="Home">
+              <span class="logo-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 64 64">
+                  <path class="logo-arc-top" d="M 14 29 a 20 20 0 1 1 40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
+                  <path class="logo-arc-bottom" d="M 14 35 a 20.5 21 0 0 0  40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
+                  <line class="logo-vert" x1="32" y1="12" x2="32" y2="52" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
+                  <line class="logo-horiz" x1="32" y1="32" x2="52" y2="32" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
+                </svg>
+              </span>
+              <span class="mobile-brand-text">Code Studios</span>
+            </a>
+
+            <!-- Brand logo + name (desktop like in pages/tshirts.html) -->
+            <div class="brand-logo-wrap brand-logo-main" onclick="location.href='index.html'" style="cursor:pointer;">
+              <div class="logo">
+                <div class="logo-icon">
+                  <svg width="64" height="64" viewBox="0 0 64 64">
+                    <path class="logo-arc-top" d="M 14 29 a 20 20 0 1 1 40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
+                    <path class="logo-arc-bottom" d="M 14 35 a 20.5 21 0 0 0  40 0" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="butt" />
+                    <line class="logo-vert" x1="32" y1="12" x2="32" y2="52" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
+                    <line class="logo-horiz" x1="32" y1="32" x2="52" y2="32" stroke="#fff" stroke-width="6" stroke-linecap="butt" />
+                  </svg>
                 </div>
-                <span class="brand-name">Code Studios</span>
+              </div>
+              <span class="brand-name">Code Studios</span>
             </div>
-            <div class="search-box-wrap">
-                <button class="search-btn" aria-label="Search">
-                    <svg class="search-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><line x1="15.5" y1="15.5" x2="20" y2="20"/></svg>
-                </button>
-                <input type="text" class="search-input-box" id="searchInputBox" placeholder="Search products..." style="display:none;">
-                <div class="search-suggestions" id="searchSuggestions" style="display:none;"></div>
+
+            <!-- Desktop Navigation Menu -->
+            <nav class="desktop-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="nav-dropdown">
+                        <button class="nav-dropdown-btn" id="categoriesDropdown">
+                            Categories
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="nav-dropdown-content" id="categoriesDropdownContent">
+                            <a href="pages/tshirts.html">T-shirts</a>
+                            <a href="pages/shirts.html">Shirts</a>
+                            <a href="pages/trousers.html">Trousers</a>
+                            <a href="pages/shorts.html">Shorts</a>
+                            <a href="pages/shoes.html">Shoes</a>
+                        </div>
+                    </li>
+                    <li><a href="dashboard/dash.html">Dashboard</a></li>
+                    <li><a href="#" onclick="showCart()">Cart</a></li>
+                    <li><a href="pages/profile.html">Profile</a></li>
+                    <li>
+                        <button id="desktopThemeToggle" class="theme-toggle-btn">
+                            🌙 Dark Mode
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="search-box-wrap" style="position:relative;display:inline-block;">
+              <button class="search-btn" aria-label="Search">
+                <svg class="search-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="18" y1="18" x2="15.5" y2="15.5" />
+                </svg>
+              </button>
+              <input type="text" class="search-input-box" id="searchInputBox" placeholder="Search products..." style="display:none;">
+              <div class="search-suggestions" id="searchSuggestions" style="display:none;"></div>
             </div>
         </nav>
     </header>
@@ -77,31 +123,31 @@
                     </button>
                 </div>
                 <div class="profile-info">
-                    <h2 id="userName">Иван Дмитриев</h2>
+                    <h2 id="userName">Ivan Dmitriev</h2>
                     <p id="userEmail">ivan.dmitriev@example.com</p>
                     <div class="profile-stats">
                         <div class="stat">
                             <span class="stat-number" id="orderCount">12</span>
-                            <span class="stat-label">Заказов</span>
+                            <span class="stat-label">Orders</span>
                         </div>
                         <div class="stat">
                             <span class="stat-number" id="totalSpent">45,600 ₽</span>
-                            <span class="stat-label">Потрачено</span>
+                            <span class="stat-label">Spent</span>
                         </div>
                         <div class="stat">
                             <span class="stat-number" id="loyaltyPoints">1,250</span>
-                            <span class="stat-label">Баллов</span>
+                            <span class="stat-label">Points</span>
                         </div>
                     </div>
                 </div>
                 <div class="profile-actions">
                     <button class="btn btn-primary" id="editProfileBtn">
                         <i class="fas fa-edit"></i>
-                        Редактировать
+                        Edit
                     </button>
                     <button class="btn btn-secondary" id="logoutBtn">
                         <i class="fas fa-sign-out-alt"></i>
-                        Выйти
+                        Logout
                     </button>
                 </div>
             </div>
@@ -110,24 +156,24 @@
             <div class="profile-tabs animate-from-left">
                 <button class="tab-btn active" data-tab="personal">
                     <i class="fas fa-user"></i>
-                    Личные данные
+                    Personal Data
                 </button>
                 <button class="tab-btn" data-tab="orders">
                     <i class="fas fa-shopping-bag"></i>
-                    Мои заказы
+                    My Orders
                 </button>
                 <button class="tab-btn" data-tab="cart">
                     <i class="fas fa-shopping-cart"></i>
-                    Корзина
+                    Cart
                     <span class="cart-badge" id="cartBadge">0</span>
                 </button>
                 <button class="tab-btn" data-tab="favorites">
                     <i class="fas fa-heart"></i>
-                    Избранное
+                    Favorites
                 </button>
                 <button class="tab-btn" data-tab="settings">
                     <i class="fas fa-cog"></i>
-                    Настройки
+                    Settings
                 </button>
             </div>
 
@@ -136,16 +182,16 @@
                 <!-- Personal Data Tab -->
                 <div class="tab-pane active" id="personal">
                     <div class="personal-data animate-from-right">
-                        <h3>Личные данные</h3>
+                        <h3>Personal Data</h3>
                         <form class="profile-form" id="profileForm">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="firstName">Имя</label>
-                                    <input type="text" id="firstName" value="Иван" required>
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" id="firstName" value="Ivan" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="lastName">Фамилия</label>
-                                    <input type="text" id="lastName" value="Дмитриев" required>
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" value="Dmitriev" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -153,21 +199,21 @@
                                 <input type="email" id="email" value="ivan.dmitriev@example.com" required>
                             </div>
                             <div class="form-group">
-                                <label for="phone">Телефон</label>
+                                <label for="phone">Phone</label>
                                 <input type="tel" id="phone" value="+7 (999) 123-45-67" required>
                             </div>
                             <div class="form-group">
-                                <label for="birthDate">Дата рождения</label>
+                                <label for="birthDate">Date of Birth</label>
                                 <input type="date" id="birthDate" value="1990-05-15">
                             </div>
                             <div class="form-group">
-                                <label for="address">Адрес доставки</label>
-                                <textarea id="address" rows="3">г. Москва, ул. Тверская, д. 1, кв. 15</textarea>
+                                <label for="address">Delivery Address</label>
+                                <textarea id="address" rows="3">Moscow, Tverskaya St., 1, apt. 15</textarea>
                             </div>
                             <div class="form-actions">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i>
-                                    Сохранить изменения
+                                    Save Changes
                                 </button>
                             </div>
                         </form>
@@ -177,7 +223,7 @@
                 <!-- Orders Tab -->
                 <div class="tab-pane" id="orders">
                     <div class="orders-section animate-from-right">
-                        <h3>Мои заказы</h3>
+                        <h3>My Orders</h3>
                         <div class="orders-list" id="ordersList">
                             <!-- Order items will be loaded here -->
                         </div>
@@ -188,10 +234,10 @@
                 <div class="tab-pane" id="cart">
                     <div class="cart-section animate-from-right">
                         <div class="cart-header">
-                            <h3>Корзина</h3>
+                            <h3>Cart</h3>
                             <button class="btn btn-secondary" id="clearCartBtn">
                                 <i class="fas fa-trash"></i>
-                                Очистить корзину
+                                Clear Cart
                             </button>
                         </div>
                         <div class="cart-content">
@@ -200,20 +246,20 @@
                             </div>
                             <div class="cart-summary" id="cartSummary">
                                 <div class="summary-item">
-                                    <span>Товаров:</span>
+                                    <span>Items:</span>
                                     <span id="totalItems">0</span>
                                 </div>
                                 <div class="summary-item">
-                                    <span>Скидка:</span>
+                                    <span>Discount:</span>
                                     <span id="discount">0 ₽</span>
                                 </div>
                                 <div class="summary-item total">
-                                    <span>Итого:</span>
+                                    <span>Total:</span>
                                     <span id="totalPrice">0 ₽</span>
                                 </div>
                                 <button class="btn btn-primary btn-large" id="checkoutBtn">
                                     <i class="fas fa-credit-card"></i>
-                                    Оформить заказ
+                                    Checkout
                                 </button>
                             </div>
                         </div>
@@ -223,7 +269,7 @@
                 <!-- Favorites Tab -->
                 <div class="tab-pane" id="favorites">
                     <div class="favorites-section animate-from-right">
-                        <h3>Избранное</h3>
+                        <h3>Favorites</h3>
                         <div class="favorites-grid" id="favoritesGrid">
                             <!-- Favorite items will be loaded here -->
                         </div>
@@ -233,29 +279,29 @@
                 <!-- Settings Tab -->
                 <div class="tab-pane" id="settings">
                     <div class="settings-section animate-from-right">
-                        <h3>Настройки</h3>
+                        <h3>Settings</h3>
                         <div class="settings-group">
-                            <h4>Уведомления</h4>
+                            <h4>Notifications</h4>
                             <div class="setting-item">
                                 <label class="switch">
                                     <input type="checkbox" id="emailNotifications" checked>
                                     <span class="slider"></span>
                                 </label>
-                                <span>Email уведомления</span>
+                                <span>Email Notifications</span>
                             </div>
                             <div class="setting-item">
                                 <label class="switch">
                                     <input type="checkbox" id="smsNotifications">
                                     <span class="slider"></span>
                                 </label>
-                                <span>SMS уведомления</span>
+                                <span>SMS Notifications</span>
                             </div>
                         </div>
                         <div class="settings-group">
-                            <h4>Безопасность</h4>
+                            <h4>Security</h4>
                             <button class="btn btn-secondary" id="changePasswordBtn">
                                 <i class="fas fa-key"></i>
-                                Сменить пароль
+                                Change Password
                             </button>
                         </div>
                     </div>
@@ -304,8 +350,11 @@
     </nav>
 
     <script src="../script.js"></script>
+    <script src="auth.js"></script>
     <script src="profile.js"></script>
     <script>
+        // Redirect to login if not authenticated
+        Auth && Auth.requireAuth('login.html');
         // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;

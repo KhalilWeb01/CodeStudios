@@ -71,7 +71,164 @@
     </div>
   </div>
   <div class="app-content">
-  <div id="section-home" class="dashboard-section">Home section content</div>
+  <div id="section-home" class="dashboard-section">
+    <div class="app-content-header">
+      <div class="home-block">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Dashboard</span>
+      </div>
+      <h1 class="app-content-headerText">Welcome back, Monica!</h1>
+      <button class="mode-switch" title="Switch Theme">
+        <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+          <defs></defs>
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-value">$24,500</h3>
+          <p class="stat-label">Total Revenue</p>
+          <span class="stat-change positive">+12.5%</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-value">156</h3>
+          <p class="stat-label">Total Orders</p>
+          <span class="stat-change positive">+8.2%</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-value">89</h3>
+          <p class="stat-label">Active Customers</p>
+          <span class="stat-change positive">+15.3%</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-value">42</h3>
+          <p class="stat-label">Products</p>
+          <span class="stat-change neutral">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <h2>Quick Actions</h2>
+      <div class="actions-grid">
+        <button class="action-btn" onclick="document.getElementById('openAddProductModal').click()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+          </svg>
+          <span>Add Product</span>
+        </button>
+        <button class="action-btn" onclick="showSection('listings')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span>View Orders</span>
+        </button>
+        <button class="action-btn" onclick="showSection('insights')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
+            <path d="M22 12A10 10 0 0 0 12 2v10z"/>
+          </svg>
+          <span>Analytics</span>
+        </button>
+        <button class="action-btn" onclick="showSection('inbox')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+            <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+          </svg>
+          <span>Messages</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="recent-activity">
+      <h2>Recent Activity</h2>
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-icon order">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+          </div>
+          <div class="activity-content">
+            <p><strong>New order</strong> received for Classic White T-Shirt</p>
+            <span class="activity-time">2 minutes ago</span>
+          </div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-icon product">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 1-1.73z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <div class="activity-content">
+            <p><strong>Product added:</strong> Sport Running Shoes</p>
+            <span class="activity-time">1 hour ago</span>
+          </div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-icon customer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div class="activity-content">
+            <p><strong>New customer</strong> registered: john.doe@email.com</p>
+            <span class="activity-time">3 hours ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="section-product" class="dashboard-section" style="display:none">
     <div class="app-content-header">
       <div class="home-block">
@@ -307,47 +464,426 @@
       </div>
     </div>
   </div>
-  <div id="section-listings" class="dashboard-section" style="display:none">My Listings section content</div>
+  <div id="section-listings" class="dashboard-section" style="display:none">
+    <div class="app-content-header">
+      <div class="home-block">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span>Orders</span>
+      </div>
+      <h1 class="app-content-headerText">Order Management</h1>
+      <button class="mode-switch" title="Switch Theme">
+        <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+          <defs></defs>
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="app-content-actions">
+      <input class="search-bar" placeholder="Search orders..." type="text">
+      <div class="app-content-actions-wrapper">
+        <div class="filter-button-wrapper">
+          <button class="action-button filter jsFilter"><span>Filter</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></button>
+          <div class="filter-menu">
+            <label>Status</label>
+            <select>
+              <option>All Status</option>
+              <option>Pending</option>
+              <option>Processing</option>
+              <option>Shipped</option>
+              <option>Delivered</option>
+              <option>Cancelled</option>
+            </select>
+            <label>Date Range</label>
+            <select>
+              <option>All Time</option>
+              <option>Today</option>
+              <option>This Week</option>
+              <option>This Month</option>
+              <option>Last 30 Days</option>
+            </select>
+            <div class="filter-menu-buttons">
+              <button class="filter-button reset">Reset</button>
+              <button class="filter-button apply">Apply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="orders-area-wrapper">
+      <div class="orders-header">
+        <div class="order-cell">Order ID</div>
+        <div class="order-cell">Customer</div>
+        <div class="order-cell">Products</div>
+        <div class="order-cell">Total</div>
+        <div class="order-cell">Status</div>
+        <div class="order-cell">Date</div>
+        <div class="order-cell">Actions</div>
+      </div>
+      
+      <div class="orders-row">
+        <div class="order-cell">#ORD-001</div>
+        <div class="order-cell">John Doe</div>
+        <div class="order-cell">Classic White T-Shirt (x2)</div>
+        <div class="order-cell">$90.00</div>
+        <div class="order-cell"><span class="status pending">Pending</span></div>
+        <div class="order-cell">2024-01-15</div>
+        <div class="order-cell">
+          <button class="btn-action">View</button>
+          <button class="btn-action">Update</button>
+        </div>
+      </div>
+      
+      <div class="orders-row">
+        <div class="order-cell">#ORD-002</div>
+        <div class="order-cell">Jane Smith</div>
+        <div class="order-cell">Sport Running Shoes (x1)</div>
+        <div class="order-cell">$129.99</div>
+        <div class="order-cell"><span class="status processing">Processing</span></div>
+        <div class="order-cell">2024-01-14</div>
+        <div class="order-cell">
+          <button class="btn-action">View</button>
+          <button class="btn-action">Update</button>
+        </div>
+      </div>
+      
+      <div class="orders-row">
+        <div class="order-cell">#ORD-003</div>
+        <div class="order-cell">Mike Johnson</div>
+        <div class="order-cell">Casual Summer Shorts (x1)</div>
+        <div class="order-cell">$49.99</div>
+        <div class="order-cell"><span class="status shipped">Shipped</span></div>
+        <div class="order-cell">2024-01-13</div>
+        <div class="order-cell">
+          <button class="btn-action">View</button>
+          <button class="btn-action">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="section-add-listing" class="dashboard-section" style="display:none">Add Listing section content</div>
   <div id="section-account" class="dashboard-section" style="display:none">
-    <form id="profileForm">
-      <label>Имя: <input type="text" id="profileFirstName" name="firstName" required></label><br>
-      <label>Фамилия: <input type="text" id="profileLastName" name="lastName" required></label><br>
-      <label>Email: <input type="email" id="profileEmail" name="email" required></label><br>
-      <label>Телефон: <input type="tel" id="profilePhone" name="phone" required></label><br>
-      <button type="submit">Сохранить</button>
-      <span id="profileSaveMsg" style="display:none;color:green;">Профиль обновлён!</span>
-    </form>
+    <div class="app-content-header">
+      <div class="home-block">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>Account</span>
+      </div>
+      <h1 class="app-content-headerText">Profile Settings</h1>
+      <button class="mode-switch" title="Switch Theme">
+        <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+          <defs></defs>
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="profile-settings">
+      <form id="profileForm">
+        <div class="form-group">
+          <label for="profileFirstName">First Name</label>
+          <input type="text" id="profileFirstName" name="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="profileLastName">Last Name</label>
+          <input type="text" id="profileLastName" name="lastName" required>
+        </div>
+        <div class="form-group">
+          <label for="profileEmail">Email</label>
+          <input type="email" id="profileEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="profilePhone">Phone</label>
+          <input type="tel" id="profilePhone" name="phone" required>
+        </div>
+        <button type="submit" class="btn-save">Save Changes</button>
+        <span id="profileSaveMsg" style="display:none;color:green;">Profile updated successfully!</span>
+      </form>
+    </div>
   </div>
-  <div id="section-inbox" class="dashboard-section" style="display:none">Inbox section content</div>
-  <div id="section-insights" class="dashboard-section" style="display:none">Insights section content</div>
+  <div id="section-inbox" class="dashboard-section" style="display:none">
+    <div class="app-content-header">
+      <div class="home-block">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+          <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+        </svg>
+        <span>Messages</span>
+      </div>
+      <h1 class="app-content-headerText">Inbox</h1>
+      <button class="mode-switch" title="Switch Theme">
+        <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+          <defs></defs>
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="messages-container">
+      <div class="message-item unread">
+        <div class="message-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="message-content">
+          <h4>Order Status Inquiry</h4>
+          <p>Hi, I would like to know the status of my order #12345...</p>
+          <span class="message-time">2 hours ago</span>
+        </div>
+        <div class="message-actions">
+          <button class="btn-reply">Reply</button>
+        </div>
+      </div>
+
+      <div class="message-item">
+        <div class="message-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="message-content">
+          <h4>Product Availability</h4>
+          <p>Do you have the Classic White T-Shirt in size L available?</p>
+          <span class="message-time">1 day ago</span>
+        </div>
+        <div class="message-actions">
+          <button class="btn-reply">Reply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="section-insights" class="dashboard-section" style="display:none">
+    <div class="app-content-header">
+      <div class="home-block">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
+          <path d="M22 12A10 10 0 0 0 12 2v10z"/>
+        </svg>
+        <span>Analytics</span>
+      </div>
+      <h1 class="app-content-headerText">Sales Analytics</h1>
+      <button class="mode-switch" title="Switch Theme">
+        <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+          <defs></defs>
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="analytics-grid">
+      <div class="chart-card">
+        <h3>Sales Overview</h3>
+        <div class="chart-placeholder">
+          <svg width="300" height="200" viewBox="0 0 300 200">
+            <rect width="300" height="200" fill="#f8f9fa" stroke="#e9ecef" stroke-width="1"/>
+            <text x="150" y="100" text-anchor="middle" fill="#6c757d" font-size="14">Chart will be implemented here</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Top Products</h3>
+        <div class="top-products">
+          <div class="product-rank">
+            <span class="rank">1</span>
+            <span class="product-name">Classic White T-Shirt</span>
+            <span class="sales-count">45 sales</span>
+          </div>
+          <div class="product-rank">
+            <span class="rank">2</span>
+            <span class="product-name">Sport Running Shoes</span>
+            <span class="sales-count">32 sales</span>
+          </div>
+          <div class="product-rank">
+            <span class="rank">3</span>
+            <span class="product-name">Casual Summer Shorts</span>
+            <span class="sales-count">28 sales</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- Модальное окно для добавления продукта -->
-<div id="addProductModal" class="modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); align-items:center; justify-content:center;">
-  <div style="background:#fff; padding:32px 24px; border-radius:12px; max-width:400px; width:100%; position:relative;">
-    <button id="closeAddProductModal" style="position:absolute; right:12px; top:12px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
-    <h2 style="margin-bottom:16px;">Add Product</h2>
-    <form id="addProductForm">
-      <label>Photos:<br><input type="file" id="productPhotos" name="photos" accept="image/*" multiple required></label><br><br>
-      <label>Name:<br><input type="text" id="productName" name="name" required></label><br><br>
-      <label>Price:<br><input type="number" id="productPrice" name="price" min="0" required></label><br><br>
-      <label>Old Price:<br><input type="number" id="productOldPrice" name="oldPrice" min="0"></label><br><br>
-      <label>Discount (%):<br><input type="number" id="productDiscount" name="discount" min="0" max="100"></label><br><br>
-      <label>Description:<br><textarea id="productDescription" name="description" required></textarea></label><br><br>
-      <label>Colors (comma separated):<br><input type="text" id="productColor" name="color" placeholder="#000,#fff,red" required></label><br><br>
-      <label>Size:<br><input type="text" id="productSize" name="size" placeholder="M, L, XL" required></label><br><br>
-      <label>Quantity:<br><input type="number" id="productQuantity" name="quantity" min="1" required></label><br><br>
-      <label>Category:<br>
-        <select id="productCategory" name="category" required>
-          <option value="tshirt">T-shirt</option>
-          <option value="shirt">Shirt</option>
-          <option value="trousers">Trousers</option>
-          <option value="shorts">Shorts</option>
-          <option value="shoes">Shoes</option>
-        </select>
-      </label><br><br>
-      <label>Rating (0-5):<br><input type="number" id="productRating" name="rating" min="0" max="5" step="0.1"></label><br><br>
-      <button type="submit">Add Product</button>
+<div id="addProductModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Add New Product</h2>
+      <button id="closeAddProductModal" class="modal-close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    
+    <form id="addProductForm" class="product-form">
+      <div class="form-sections">
+        <!-- Basic Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 1-1.73z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+            Basic Information
+          </h3>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="productName">Product Name *</label>
+              <input type="text" id="productName" name="name" placeholder="Enter product name" required>
+            </div>
+            <div class="form-group">
+              <label for="productCategory">Category *</label>
+              <select id="productCategory" name="category" required>
+                <option value="">Select category</option>
+                <option value="tshirt">T-shirt</option>
+                <option value="shirt">Shirt</option>
+                <option value="trousers">Trousers</option>
+                <option value="shorts">Shorts</option>
+                <option value="shoes">Shoes</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="productDescription">Description *</label>
+            <textarea id="productDescription" name="description" placeholder="Describe your product..." rows="4" required></textarea>
+          </div>
+        </div>
+
+        <!-- Pricing Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            Pricing
+          </h3>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="productPrice">Current Price *</label>
+              <div class="input-with-icon">
+                <span class="currency-symbol">$</span>
+                <input type="number" id="productPrice" name="price" min="0" step="0.01" placeholder="0.00" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="productOldPrice">Original Price</label>
+              <div class="input-with-icon">
+                <span class="currency-symbol">$</span>
+                <input type="number" id="productOldPrice" name="oldPrice" min="0" step="0.01" placeholder="0.00">
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="productDiscount">Discount Percentage</label>
+            <div class="input-with-icon">
+              <input type="number" id="productDiscount" name="discount" min="0" max="100" placeholder="0">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Media Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21,15 16,10 5,21"/>
+            </svg>
+            Product Images
+          </h3>
+          
+          <div class="form-group">
+            <label for="productPhotos">Upload Images *</label>
+            <div class="file-upload-area" id="fileUploadArea">
+              <div class="upload-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7,10 12,15 17,10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <p>Drag & drop images here or click to browse</p>
+                <span>Supports: JPG, PNG, GIF (Max 5MB each)</span>
+              </div>
+              <input type="file" id="productPhotos" name="photos" accept="image/*" multiple required>
+            </div>
+            <div class="uploaded-files" id="uploadedFiles"></div>
+          </div>
+        </div>
+
+        <!-- Inventory Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            Inventory & Options
+          </h3>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="productQuantity">Stock Quantity *</label>
+              <input type="number" id="productQuantity" name="quantity" min="1" placeholder="0" required>
+            </div>
+            <div class="form-group">
+              <label for="productRating">Rating (0-5)</label>
+              <div class="rating-input">
+                <input type="number" id="productRating" name="rating" min="0" max="5" step="0.1" placeholder="0">
+                <div class="stars">
+                  <span class="star" data-value="1">★</span>
+                  <span class="star" data-value="2">★</span>
+                  <span class="star" data-value="3">★</span>
+                  <span class="star" data-value="4">★</span>
+                  <span class="star" data-value="5">★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="productColor">Available Colors</label>
+              <input type="text" id="productColor" name="color" placeholder="#000000, #ffffff, red, blue" value="#000000, #ffffff, red">
+              <small>Enter colors as hex codes or names, separated by commas</small>
+            </div>
+            <div class="form-group">
+              <label for="productSize">Available Sizes</label>
+              <input type="text" id="productSize" name="size" placeholder="S, M, L, XL" value="S, M, L, XL">
+              <small>Enter sizes separated by commas</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" id="cancelAddProduct">Cancel</button>
+        <button type="submit" class="btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12l2 2 4-4"/>
+            <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+          </svg>
+          Add Product
+        </button>
+      </div>
     </form>
   </div>
 </div>

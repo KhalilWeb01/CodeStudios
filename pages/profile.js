@@ -1,6 +1,13 @@
 // Profile Page JavaScript
 class ProfileManager {
     constructor() {
+        this.authUser = (window.Auth && Auth.getCurrentUser && Auth.getCurrentUser()) || null;
+        if (!this.authUser) {
+            // As a safeguard; profile.html also guards route
+            try { Auth && Auth.requireAuth('login.html'); } catch {}
+        }
+        this.storagePrefix = (key) => this.authUser ? `u:${this.authUser.id}:${key}` : key;
+
         this.currentUser = this.loadUserData();
         this.cart = this.loadCart();
         this.favorites = this.loadFavorites();
@@ -124,11 +131,23 @@ class ProfileManager {
 
     loadUserProfile() {
         if (this.currentUser) {
-            document.getElementById('userName').textContent = this.currentUser.name;
-            document.getElementById('userEmail').textContent = this.currentUser.email;
-            document.getElementById('orderCount').textContent = this.currentUser.orderCount || 0;
-            document.getElementById('totalSpent').textContent = this.formatPrice(this.currentUser.totalSpent || 0);
-            document.getElementById('loyaltyPoints').textContent = this.currentUser.loyaltyPoints || 0;
+            const displayName = this.currentUser.name || (this.authUser && this.authUser.name) || 'User';
+            const displayEmail = (this.authUser && this.authUser.email) || this.currentUser.email || '';
+            document.getElementById('userName').textContent = displayName;
+            document.getElementById('userEmail').textContent = displayEmail;
+
+            // Derive stats from orders if not present
+            const orderCount = (this.orders && this.orders.length) || this.currentUser.orderCount || 0;
+            const totalSpent = this.orders ? this.orders.reduce((s, o) => s + (o.total || 0), 0) : (this.currentUser.totalSpent || 0);
+            const loyaltyPoints = this.currentUser.loyaltyPoints != null ? this.currentUser.loyaltyPoints : Math.floor(totalSpent / 100);
+
+            this.currentUser.orderCount = orderCount;
+            this.currentUser.totalSpent = totalSpent;
+            this.currentUser.loyaltyPoints = loyaltyPoints;
+
+            document.getElementById('orderCount').textContent = orderCount;
+            document.getElementById('totalSpent').textContent = this.formatPrice(totalSpent);
+            document.getElementById('loyaltyPoints').textContent = loyaltyPoints;
 
             // Fill form fields
             if (this.currentUser.firstName) {
@@ -137,9 +156,7 @@ class ProfileManager {
             if (this.currentUser.lastName) {
                 document.getElementById('lastName').value = this.currentUser.lastName;
             }
-            if (this.currentUser.email) {
-                document.getElementById('email').value = this.currentUser.email;
-            }
+            document.getElementById('email').value = displayEmail;
             if (this.currentUser.phone) {
                 document.getElementById('phone').value = this.currentUser.phone;
             }
@@ -166,8 +183,8 @@ class ProfileManager {
         this.currentUser = { ...this.currentUser, ...formData };
         this.currentUser.name = `${formData.firstName} ${formData.lastName}`;
         
-        // Save to localStorage
-        localStorage.setItem('userData', JSON.stringify(this.currentUser));
+        // Save to localStorage (namespaced)
+        this.saveUserData();
         
         // Update display
         document.getElementById('userName').textContent = this.currentUser.name;
@@ -468,7 +485,7 @@ class ProfileManager {
 
     logout() {
         if (confirm('Вы уверены, что хотите выйти?')) {
-            localStorage.removeItem('userData');
+            try { Auth && Auth.signOut && Auth.signOut(); } catch {}
             window.location.href = 'login.html';
         }
     }
@@ -547,69 +564,94 @@ class ProfileManager {
 
     // Data persistence methods
     loadUserData() {
-        const data = localStorage.getItem('userData');
-        return data ? JSON.parse(data) : {
-            name: 'Иван Дмитриев',
-            email: 'ivan.dmitriev@example.com',
-            firstName: 'Иван',
-            lastName: 'Дмитриев',
-            phone: '+7 (999) 123-45-67',
-            birthDate: '1990-05-15',
-            address: 'г. Москва, ул. Тверская, д. 1, кв. 15',
-            orderCount: 12,
-            totalSpent: 45600,
-            loyaltyPoints: 1250
+        // Try namespaced profile
+        const key = this.storagePrefix('profile');
+        const raw = localStorage.getItem(key);
+        if (raw) {
+            try { return JSON.parse(raw); } catch {}
+        }
+        // Migrate legacy 'userData'
+        const legacy = localStorage.getItem('userData');
+        if (legacy) {
+            localStorage.setItem(key, legacy);
+            return JSON.parse(legacy);
+        }
+        // Default from Auth user
+        const fallbackName = (this.authUser && this.authUser.name) || 'User';
+        const fallbackEmail = (this.authUser && this.authUser.email) || '';
+        const profile = {
+            name: fallbackName,
+            email: fallbackEmail,
+            firstName: fallbackName.split(' ')[0] || '',
+            lastName: fallbackName.split(' ').slice(1).join(' ') || '',
+            phone: '',
+            birthDate: '',
+            address: '',
+            orderCount: 0,
+            totalSpent: 0,
+            loyaltyPoints: 0
         };
+        localStorage.setItem(key, JSON.stringify(profile));
+        return profile;
     }
 
     saveUserData() {
-        localStorage.setItem('userData', JSON.stringify(this.currentUser));
+        const key = this.storagePrefix('profile');
+        localStorage.setItem(key, JSON.stringify(this.currentUser));
     }
 
     loadCart() {
-        const data = localStorage.getItem('cart');
-        return data ? JSON.parse(data) : [];
+        const key = this.storagePrefix('cart');
+        const raw = localStorage.getItem(key);
+        if (raw) {
+            try { return JSON.parse(raw); } catch {}
+        }
+        // migrate from global 'cart'
+        const legacy = localStorage.getItem('cart');
+        if (legacy) {
+            localStorage.setItem(key, legacy);
+            return JSON.parse(legacy);
+        }
+        return [];
     }
 
     saveCart() {
-        localStorage.setItem('cart', JSON.stringify(this.cart));
+        const key = this.storagePrefix('cart');
+        localStorage.setItem(key, JSON.stringify(this.cart));
     }
 
     loadFavorites() {
-        const data = localStorage.getItem('favorites');
-        return data ? JSON.parse(data) : [];
+        const key = this.storagePrefix('favorites');
+        const raw = localStorage.getItem(key);
+        if (raw) { try { return JSON.parse(raw); } catch {} }
+        const legacy = localStorage.getItem('favorites');
+        if (legacy) {
+            localStorage.setItem(key, legacy);
+            return JSON.parse(legacy);
+        }
+        return [];
     }
 
     saveFavorites() {
-        localStorage.setItem('favorites', JSON.stringify(this.favorites));
+        const key = this.storagePrefix('favorites');
+        localStorage.setItem(key, JSON.stringify(this.favorites));
     }
 
     loadOrders() {
-        const data = localStorage.getItem('orders');
-        return data ? JSON.parse(data) : [
-            {
-                id: 1001,
-                items: [
-                    { id: 1, name: 'Футболка хлопковая', price: 1200, quantity: 2, image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDE1MCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMjAwIiBmaWxsPSIjNGE5MGUyIi8+Cjx0ZXh0IHg9Ijc1IiB5PSIxMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlQtU2hpcnQ8L3RleHQ+Cjwvc3ZnPgo=' }
-                ],
-                total: 2400,
-                date: '2024-01-15T10:30:00Z',
-                status: 'completed'
-            },
-            {
-                id: 1002,
-                items: [
-                    { id: 5, name: 'Джинсы классические', price: 3500, quantity: 1, image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDE1MCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMjhhNzQ1Ii8+Cjx0ZXh0IHg9Ijc1IiB5PSIxMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkplYW5zPC90ZXh0Pgo8L3N2Zz4K' }
-                ],
-                total: 3500,
-                date: '2024-01-10T14:20:00Z',
-                status: 'shipped'
-            }
-        ];
+        const key = this.storagePrefix('orders');
+        const raw = localStorage.getItem(key);
+        if (raw) { try { return JSON.parse(raw); } catch {} }
+        const legacy = localStorage.getItem('orders');
+        if (legacy) {
+            localStorage.setItem(key, legacy);
+            return JSON.parse(legacy);
+        }
+        return [];
     }
 
     saveOrders() {
-        localStorage.setItem('orders', JSON.stringify(this.orders));
+        const key = this.storagePrefix('orders');
+        localStorage.setItem(key, JSON.stringify(this.orders));
     }
 }
 

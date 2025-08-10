@@ -93,6 +93,8 @@ document.addEventListener('DOMContentLoaded', function() {
       searchSuggestions.innerHTML = '';
     }
     if (searchIconBtn) searchIconBtn.style.display = 'none';
+    // Mark search open for styling (e.g., keep mobile logo behind)
+    document.body.classList.add('search-open');
   }
   function hideSearchInput() {
     if (searchInput) searchInput.style.display = 'none';
@@ -101,6 +103,8 @@ document.addEventListener('DOMContentLoaded', function() {
       searchSuggestions.innerHTML = '';
     }
     if (searchIconBtn) searchIconBtn.style.display = 'block';
+    // Remove search-open state
+    document.body.classList.remove('search-open');
   }
   if (searchIconBtn && searchInput) {
     searchIconBtn.addEventListener('click', showSearchInput);
