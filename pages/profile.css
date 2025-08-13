@@ -229,26 +229,65 @@
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--profile-dark);
+    letter-spacing: .3px;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 1.15rem 1rem .85rem 1rem;
     border: 2px solid var(--profile-border);
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.3s ease;
     font-family: 'Courier New', monospace;
+    background: #ffffff;
+    box-shadow: inset 0 1px 0 rgba(0,0,0,0.02);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
     border-color: var(--profile-primary);
+    box-shadow: 0 0 0 4px rgba(74,144,226,0.12);
 }
+
+/* Floating labels */
+.profile-form .form-group {
+    position: relative;
+}
+.profile-form .form-group label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    margin: 0;
+    padding: 0 .35rem;
+    background: #ffffff;
+    opacity: .8;
+    transform-origin: left top;
+    transition: transform .18s ease, color .18s ease, top .18s ease, opacity .18s ease;
+    pointer-events: none;
+}
+.profile-form .form-group.focused label,
+.profile-form .form-group.has-value label {
+    transform: translateY(-18px) scale(.9);
+    top: -8px;
+    color: var(--profile-primary);
+    opacity: 1;
+}
+
+/* Hover state */
+.form-group input:hover,
+.form-group textarea:hover {
+    border-color: #d5dde5;
+}
+
+/* Dark theme adjustments for floating labels */
+.dark-theme .profile-form .form-group label { background: #2c3e50; color: #dfe6ee; }
+.dark-theme .profile-form .form-group.focused label,
+.dark-theme .profile-form .form-group.has-value label { color: var(--profile-primary); }
 
 .form-actions {
     margin-top: 2rem;
@@ -298,19 +337,29 @@
     font-weight: 500;
 }
 
-.order-status.completed {
-    background: #d4edda;
-    color: #155724;
-}
-
 .order-status.processing {
-    background: #fff3cd;
-    color: #856404;
+    background: #d1ecf1;
+    color: #0c5460;
 }
 
 .order-status.shipped {
     background: #cce7ff;
     color: #004085;
+}
+
+.order-status.completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.order-status.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.order-status.cancelled {
+    background: #f8d7da;
+    color: #721c24;
 }
 
 .order-total {

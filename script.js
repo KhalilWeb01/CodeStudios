@@ -1,3 +1,17 @@
+// Bootstrap products from backend into localStorage (used by public pages)
+(function bootstrapProducts() {
+  try {
+    fetch('/api/products.php')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data && Array.isArray(data.items) && data.items.length) {
+          try { localStorage.setItem('products', JSON.stringify(data.items)); } catch {}
+        }
+      })
+      .catch(() => {});
+  } catch (_) {}
+})();
+
 // ===== SIDEBAR NAVIGATION =====
 const sidebar = document.getElementById('sidebar');
 const openSidebarBtn = document.getElementById('openSidebar');

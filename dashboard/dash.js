@@ -8,9 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-document.querySelector(".jsFilter").addEventListener("click", function () {
-  document.querySelector(".filter-menu").classList.toggle("active");
-});
+// Filter functionality is now handled by setupFilterFunctionality()
 
 document.querySelector(".grid").addEventListener("click", function () {
   document.querySelector(".list").classList.remove("active");
@@ -28,10 +26,81 @@ document.querySelector(".list").addEventListener("click", function () {
   document.querySelector(".products-area-wrapper").classList.add("tableView");
 });
 
-var modeSwitch = document.querySelector('.mode-switch');
-modeSwitch.addEventListener('click', function () {                      document.documentElement.classList.toggle('light');
- modeSwitch.classList.toggle('active');
-});
+// Theme switching functionality
+function setupThemeSwitching() {
+  const modeSwitches = document.querySelectorAll('.mode-switch');
+  
+  modeSwitches.forEach(modeSwitch => {
+    modeSwitch.addEventListener('click', function () {
+      document.documentElement.classList.toggle('light');
+      // Update all mode switches to show active state
+      modeSwitches.forEach(ms => ms.classList.toggle('active'));
+      
+      // Update dashboard stats after theme change
+      updateDashboardStats();
+    });
+  });
+  
+  // Initialize theme state
+  const isLightTheme = document.documentElement.classList.contains('light');
+  modeSwitches.forEach(ms => {
+    if (isLightTheme) ms.classList.add('active');
+    else ms.classList.remove('active');
+  });
+}
+
+// Filter functionality
+function setupFilterFunctionality() {
+  const filterButtons = document.querySelectorAll('.jsFilter');
+  
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const filterMenu = this.nextElementSibling;
+      if (filterMenu && filterMenu.classList.contains('filter-menu')) {
+        filterMenu.classList.toggle('active');
+      }
+    });
+  });
+  
+  // Close filter menu when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.filter-button-wrapper')) {
+      document.querySelectorAll('.filter-menu').forEach(menu => {
+        menu.classList.remove('active');
+      });
+    }
+  });
+  
+  // Filter apply and reset functionality
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('filter-button')) {
+      if (e.target.classList.contains('apply')) {
+        // Apply filters
+        const filterMenu = e.target.closest('.filter-menu');
+        const statusFilter = filterMenu.querySelector('select');
+        if (statusFilter) {
+          const status = statusFilter.value.toLowerCase();
+          const filteredOrders = filterOrdersByStatus(status);
+          renderOrders(filteredOrders);
+          // Update dashboard stats after applying filter
+          updateDashboardStats();
+        }
+        filterMenu.classList.remove('active');
+      } else if (e.target.classList.contains('reset')) {
+        // Reset filters
+        const filterMenu = e.target.closest('.filter-menu');
+        const selects = filterMenu.querySelectorAll('select');
+        selects.forEach(select => {
+          select.selectedIndex = 0;
+        });
+        renderOrders(); // Show all orders
+        // Update dashboard stats after resetting filter
+        updateDashboardStats();
+        filterMenu.classList.remove('active');
+      }
+    }
+  });
+}
 
 // SPA logic for sidebar
 function hideAllSections() {
@@ -47,6 +116,9 @@ function showSection(sectionName) {
     sectionDiv.style.display = '';
     // Update active sidebar item
     setActiveSidebarItem(document.querySelector(`[data-section="${sectionName}"]`));
+    
+    // Update dashboard stats when switching sections
+    updateDashboardStats();
   }
 }
 
@@ -97,6 +169,10 @@ if (profileForm) {
     const phone = document.getElementById('profilePhone').value.trim();
     setProfile({ firstName, lastName, email, phone });
     updateProfileUI();
+    
+    // Update dashboard stats after profile update
+    updateDashboardStats();
+    
     const msg = document.getElementById('profileSaveMsg');
     if (msg) {
       msg.style.display = 'inline';
@@ -122,16 +198,7 @@ if (openAddProductModalBtn && addProductModal && closeAddProductModalBtn) {
   closeAddProductModalBtn.addEventListener('click', closeModal);
   cancelAddProductBtn.addEventListener('click', closeModal);
   
-  addProductModal.addEventListener('click', (e) => {
-    if (e.target === addProductModal) closeModal();
-  });
-  
-  // Close modal on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && addProductModal.style.display === 'flex') {
-      closeModal();
-    }
-  });
+  // Disable closing by clicking outside or pressing Escape to prevent accidental dismiss
 }
 
 function closeModal() {
@@ -345,11 +412,9 @@ if (addProductForm) {
         photoPromises.push(compressImage(file));
       }
       
-      Promise.all(photoPromises).then(photos => {
+      Promise.all(photoPromises).then(async photos => {
         try {
-          const products = getProducts();
           const newProduct = { 
-            id: generateProductId(), 
             name, 
             price, 
             oldPrice, 
@@ -362,18 +427,14 @@ if (addProductForm) {
             rating, 
             photos 
           };
-          
-          products.push(newProduct);
-          setProducts(products);
+
+          await createProduct(newProduct);
+          await loadProducts();
           renderProducts();
           
-          // Show success message
+          updateDashboardStats();
           showNotification('Product added successfully!', 'success');
-          
-          // Reset form and close modal
           closeModal();
-          
-          // Reset button
           submitBtn.innerHTML = originalText;
           submitBtn.disabled = false;
         } catch (error) {
@@ -463,34 +524,57 @@ function showNotification(message, type = 'info') {
 }
 
 // --- Add Product Form Logic ---
-function getProducts() {
-  const data = localStorage.getItem('products');
-  if (!data) return [];
-  return JSON.parse(data);
-}
-function setProducts(products) {
-  try {
-    // Check if data is too large
-    const dataString = JSON.stringify(products);
-    const dataSize = new Blob([dataString]).size;
-    const maxSize = 5 * 1024 * 1024; // 5MB limit
-    
-    if (dataSize > maxSize) {
-      showNotification('Too much data. Please remove some products or use smaller images.', 'error');
-      return false;
-    }
-    
-    localStorage.setItem('products', dataString);
-    return true;
-  } catch (error) {
-    console.error('Error saving to localStorage:', error);
-    if (error.name === 'QuotaExceededError') {
-      showNotification('Storage full. Please remove some products or use smaller images.', 'error');
-    } else {
-      showNotification('Error saving data. Please try again.', 'error');
-    }
-    return false;
+const API_BASE = '/api';
+let productsCache = [];
+let ordersCache = [];
+
+async function apiFetch(path, options = {}) {
+  const res = await fetch(`${API_BASE}${path}`, {
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'same-origin',
+    ...options,
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    throw new Error(`API ${path} failed: ${res.status} ${text}`);
   }
+  return res.json();
+}
+
+async function loadProducts() {
+  try {
+    const data = await apiFetch('/products.php');
+    productsCache = Array.isArray(data.items) ? data.items : [];
+  } catch (e) {
+    console.warn('Falling back to localStorage products due to API error:', e.message);
+    const raw = localStorage.getItem('products');
+    productsCache = raw ? JSON.parse(raw) : [];
+  }
+  return productsCache;
+}
+
+function getProducts() {
+  return productsCache;
+}
+
+async function createProduct(product) {
+  const created = await apiFetch('/products.php', { method: 'POST', body: JSON.stringify(product) });
+  return created;
+}
+
+async function updateProduct(id, partial) {
+  const updated = await apiFetch(`/products.php?id=${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(partial) });
+  return updated;
+}
+
+async function deleteProduct(id) {
+  await apiFetch(`/products.php?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+  return true;
+}
+
+async function refreshProductsUI() {
+  const items = await loadProducts();
+  renderProducts(items);
 }
 function generateProductId() {
   return 'prod_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
@@ -597,6 +681,9 @@ function addDemoProducts() {
       }
     ];
     setProducts(demoProducts);
+    
+    // Update dashboard stats after adding demo products
+    updateDashboardStats();
   }
 }
 // Clear localStorage function
@@ -605,6 +692,8 @@ function clearAllProducts() {
     try {
       localStorage.removeItem('products');
       renderProducts();
+      // Update dashboard stats after clearing all products
+      updateDashboardStats();
       showNotification('All products cleared successfully!', 'success');
     } catch (error) {
       console.error('Error clearing products:', error);
@@ -687,6 +776,9 @@ function renderProducts() {
   
   wrapper.innerHTML = html;
   
+  // Update dashboard stats after rendering products
+  updateDashboardStats();
+  
   // Add clear button
   addClearButton();
   
@@ -694,12 +786,17 @@ function renderProducts() {
   wrapper.querySelectorAll('.delete-product-btn').forEach(btn => {
     btn.addEventListener('click', function() {
       const idx = parseInt(this.getAttribute('data-idx'));
-      const products = getProducts();
-      products.splice(idx, 1);
-      if (setProducts(products)) {
+      const product = getProducts()[idx];
+      if (!product) return;
+      deleteProduct(product.id).then(async () => {
+        await loadProducts();
         renderProducts();
+        updateDashboardStats();
         showNotification('Product deleted successfully!', 'success');
-      }
+      }).catch(err => {
+        console.error('Delete failed', err);
+        showNotification('Delete failed', 'error');
+      });
     });
   });
   
@@ -795,10 +892,9 @@ function renderProducts() {
             }
           }
           
-          Promise.all(photoPromises).then(photos => {
+          Promise.all(photoPromises).then(async photos => {
             try {
               const updated = { 
-                id: product.id || generateProductId(), 
                 name, 
                 price, 
                 oldPrice, 
@@ -811,30 +907,14 @@ function renderProducts() {
                 rating, 
                 photos: (files.length > 0 ? photos : product.photos) 
               };
-              
-              const products = getProducts();
-              products[idx] = updated;
-              
-              if (setProducts(products)) {
-                renderProducts();
-                
-                // Show success message
-                showNotification('Product updated successfully!', 'success');
-                
-                // Reset form and close modal
-                closeModal();
-                
-                // Restore original submit handler
-                addProductForm.onsubmit = originalSubmitHandler;
-                
-                // Reset button
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-              } else {
-                // If save failed, don't close modal
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-              }
+              await updateProduct(product.id, updated);
+              await loadProducts();
+              renderProducts();
+              showNotification('Product updated successfully!', 'success');
+              closeModal();
+              addProductForm.onsubmit = originalSubmitHandler;
+              submitBtn.innerHTML = originalText;
+              submitBtn.disabled = false;
             } catch (error) {
               console.error('Error updating product:', error);
               showNotification('Error updating product. Please try again.', 'error');
@@ -854,7 +934,615 @@ function renderProducts() {
 }
 // Автоматический рендер при загрузке
 if (document.querySelector('#section-product')) {
-  migrateExistingProducts();
-  addDemoProducts();
-  renderProducts();
+  loadProducts().then(() => renderProducts());
 }
+
+// Orders Management Functions
+async function loadOrders() {
+  try {
+    const data = await apiFetch('/orders.php');
+    ordersCache = Array.isArray(data.items) ? data.items : [];
+  } catch (e) {
+    console.warn('Orders API error, using local fallback:', e.message);
+    const raw = localStorage.getItem('orders');
+    ordersCache = raw ? JSON.parse(raw) : [];
+  }
+  return ordersCache;
+}
+
+function getOrders() {
+  return ordersCache;
+}
+
+async function createRemoteOrder(order) {
+  const created = await apiFetch('/orders.php', { method: 'POST', body: JSON.stringify(order) });
+  return created;
+}
+
+async function createOrderFromCart(cartItems, customerInfo) {
+  const order = {
+    customerName: customerInfo.name || 'Anonymous',
+    customerEmail: customerInfo.email || '',
+    customerPhone: customerInfo.phone || '',
+    products: cartItems.map(item => ({ id: item.id, name: item.name, price: item.price, quantity: item.quantity })),
+    total: cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+    status: 'pending',
+    date: new Date().toISOString()
+  };
+  await createRemoteOrder(order);
+  await loadOrders();
+  updateDashboardStats();
+  return order;
+}
+
+async function updateOrderStatus(orderId, newStatus) {
+  try {
+    await apiFetch(`/orders.php?id=${encodeURIComponent(orderId)}`, { method: 'PUT', body: JSON.stringify({ status: newStatus }) });
+    await loadOrders();
+    renderOrders();
+    updateDashboardStats();
+    showNotification(`Order ${orderId} status updated to ${newStatus}`, 'success');
+    return true;
+  } catch (e) {
+    console.error('Failed to update order', e);
+    showNotification('Failed to update order', 'error');
+    return false;
+  }
+}
+
+function updateClientOrderStatus(order) {
+  // Get all users from localStorage
+  const users = JSON.parse(localStorage.getItem('users') || '{}');
+  
+  // Find user by email
+  const userEmail = order.customerEmail;
+  if (users[userEmail]) {
+    // Update user's orders
+    if (!users[userEmail].orders) {
+      users[userEmail].orders = [];
+    }
+    
+    const userOrderIndex = users[userEmail].orders.findIndex(uo => uo.id === order.id);
+    if (userOrderIndex !== -1) {
+      users[userEmail].orders[userOrderIndex].status = order.status;
+      users[userEmail].orders[userOrderIndex].lastUpdated = order.lastUpdated;
+    } else {
+      // Add new order to user
+      users[userEmail].orders.push({
+        id: order.id,
+        products: order.products,
+        total: order.total,
+        status: order.status,
+        date: order.date,
+        lastUpdated: order.lastUpdated
+      });
+    }
+    
+    // Save updated users
+    localStorage.setItem('users', JSON.stringify(users));
+  }
+  
+  // Also update orders in the main orders localStorage for profile sync
+  try {
+    const profileOrders = JSON.parse(localStorage.getItem('profileOrders') || '[]');
+    const profileOrderIndex = profileOrders.findIndex(po => 
+      po.customerEmail === order.customerEmail && 
+      po.date === order.date && 
+      po.total === order.total
+    );
+    
+    if (profileOrderIndex !== -1) {
+      profileOrders[profileOrderIndex].status = order.status;
+      profileOrders[profileOrderIndex].lastUpdated = order.lastUpdated;
+    }
+    
+    localStorage.setItem('profileOrders', JSON.stringify(profileOrders));
+  } catch (error) {
+    console.error('Error updating profile orders:', error);
+  }
+}
+
+function searchOrders(query) {
+  const orders = getOrders();
+  if (!query.trim()) return orders;
+  
+  const searchTerm = query.toLowerCase();
+  return orders.filter(order => 
+    order.id.toLowerCase().includes(searchTerm) ||
+    order.customerName.toLowerCase().includes(searchTerm) ||
+    order.customerEmail.toLowerCase().includes(searchTerm) ||
+    order.products.some(product => product.name.toLowerCase().includes(searchTerm)) ||
+    order.status.toLowerCase().includes(searchTerm)
+  );
+}
+
+function filterOrdersByStatus(status) {
+  const orders = getOrders();
+  if (status === 'all') return orders;
+  return orders.filter(order => order.status === status);
+}
+
+function renderOrders(filteredOrders = null) {
+  const wrapper = document.querySelector('#section-listings .orders-area-wrapper');
+  if (!wrapper) return;
+  
+  const orders = filteredOrders || getOrders();
+  let html = '';
+  
+  html += `<div class="orders-header">
+    <div class="order-cell">Order ID</div>
+    <div class="order-cell">Customer</div>
+    <div class="order-cell">Products</div>
+    <div class="order-cell">Total</div>
+    <div class="order-cell">Status</div>
+    <div class="order-cell">Date</div>
+    <div class="order-cell">Actions</div>
+  </div>`;
+  
+  if (orders.length === 0) {
+    html += `<div class="no-orders">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <h3>No orders yet</h3>
+      <p>Orders will appear here when customers complete their purchases.</p>
+    </div>`;
+  } else {
+    orders.forEach(order => {
+      const orderDate = new Date(order.date);
+      const formattedDate = orderDate.toLocaleDateString();
+      const formattedTime = orderDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      
+      html += `<div class="orders-row" data-order-id="${order.id}">
+        <div class="order-cell">${order.id}</div>
+        <div class="order-cell">
+          <div class="customer-info">
+            <div class="customer-name">${order.customerName}</div>
+            <div class="customer-email">${order.customerEmail || 'N/A'}</div>
+            <div class="customer-phone">${order.customerPhone || 'N/A'}</div>
+          </div>
+        </div>
+        <div class="order-cell">
+          <div class="products-list">
+            ${order.products.map(product => `
+              <div class="product-item">
+                <span class="product-name">${product.name || 'Товар'}</span>
+                <span class="product-quantity">(x${product.quantity || 1})</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div class="order-cell">$${order.total.toFixed(2)}</div>
+        <div class="order-cell">
+          <span class="status ${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span>
+        </div>
+        <div class="order-cell">
+          <div class="date-info">
+            <div class="order-date">${formattedDate}</div>
+            <div class="order-time">${formattedTime}</div>
+          </div>
+        </div>
+        <div class="order-cell">
+          <div class="order-actions">
+            <button class="btn-action view-order" data-order-id="${order.id}">View</button>
+            <div class="status-dropdown">
+              <button class="btn-action status-toggle" data-order-id="${order.id}">
+                Update Status
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6,9 12,15 18,9"></polyline>
+                </svg>
+              </button>
+              <div class="status-options">
+                <div class="status-option" data-status="pending">Pending</div>
+                <div class="status-option" data-status="processing">Processing</div>
+                <div class="status-option" data-status="shipped">Shipped</div>
+                <div class="status-option" data-status="delivered">Delivered</div>
+                <div class="status-option" data-status="cancelled">Cancelled</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    });
+  }
+  
+  wrapper.innerHTML = html;
+  
+  // Update dashboard stats after rendering orders
+  updateDashboardStats();
+  
+  // Add event listeners for status updates
+  setupOrderEventListeners();
+}
+
+function setupOrderEventListeners() {
+  // Status dropdown toggle
+  document.querySelectorAll('.status-toggle').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const dropdown = this.closest('.status-dropdown');
+      dropdown.classList.toggle('active');
+    });
+  });
+  
+  // Status option selection
+  document.querySelectorAll('.status-option').forEach(option => {
+    option.addEventListener('click', function() {
+      const orderId = this.closest('.orders-row').getAttribute('data-order-id');
+      const newStatus = this.getAttribute('data-status');
+      
+      if (updateOrderStatus(orderId, newStatus)) {
+        // Close dropdown
+        this.closest('.status-dropdown').classList.remove('active');
+      }
+    });
+  });
+  
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.status-dropdown')) {
+      document.querySelectorAll('.status-dropdown').forEach(dropdown => {
+        dropdown.classList.remove('active');
+      });
+    }
+  });
+  
+  // View order details
+  document.querySelectorAll('.view-order').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const orderId = this.getAttribute('data-order-id');
+      showOrderDetails(orderId);
+    });
+  });
+}
+
+function showOrderDetails(orderId) {
+  const orders = getOrders();
+  const order = orders.find(o => o.id === orderId);
+  
+  if (!order) return;
+  
+  const modal = document.createElement('div');
+  modal.className = 'order-details-modal';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Order Details - ${order.id}</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="order-section">
+          <h4>Customer Information</h4>
+          <p><strong>Name:</strong> ${order.customerName}</p>
+          <p><strong>Email:</strong> ${order.customerEmail}</p>
+          <p><strong>Phone:</strong> ${order.customerPhone}</p>
+        </div>
+        <div class="order-section">
+          <h4>Order Items</h4>
+          ${order.products.map(product => `
+            <div class="order-product">
+              <span class="product-name">${product.name}</span>
+              <span class="product-quantity">x${product.quantity}</span>
+              <span class="product-price">$${product.price}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="order-section">
+          <h4>Order Summary</h4>
+          <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
+          <p><strong>Status:</strong> <span class="status ${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span></p>
+          <p><strong>Date:</strong> ${new Date(order.date).toLocaleString()}</p>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  // Close modal
+  modal.querySelector('.close-modal').addEventListener('click', () => {
+    modal.remove();
+  });
+  
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.remove();
+    }
+  });
+}
+
+// Recent Activity (reads last events from orders/products/customers)
+function renderRecentActivity() {
+  const container = document.querySelector('.recent-activity .activity-list');
+  if (!container) return;
+
+  const activities = [];
+  try {
+    const orders = getOrders();
+    orders.slice(0, 10).forEach(o => {
+      activities.push({
+        type: 'order',
+        title: 'New order',
+        text: `${o.customerName || 'Customer'} ordered (${(o.products||[]).length} items)`,
+        ts: new Date(o.date || Date.now()).getTime()
+      });
+    });
+  } catch {}
+  try {
+    const products = getProducts();
+    products.slice(-10).forEach(p => {
+      activities.push({
+        type: 'product',
+        title: 'Product added',
+        text: p.name || 'Product',
+        ts: Date.now() // no exact ts stored; approximate
+      });
+    });
+  } catch {}
+  try {
+    const customers = JSON.parse(localStorage.getItem('customers_cache') || '[]');
+    customers.slice(-10).forEach(c => {
+      activities.push({
+        type: 'customer',
+        title: 'New customer',
+        text: c.email || c.name || 'Customer',
+        ts: Date.now()
+      });
+    });
+  } catch {}
+
+  activities.sort((a,b)=>b.ts-a.ts);
+  const items = activities.slice(0, 10).map(a => {
+    const icon = a.type === 'order' ? '🧾' : a.type === 'product' ? '🛍️' : '👤';
+    const time = new Date(a.ts).toLocaleString();
+    return `<div class="activity-item"><div class="activity-icon">${icon}</div><div class="activity-content"><p><strong>${a.title}</strong> ${a.text}</p><span class="activity-time">${time}</span></div></div>`;
+  }).join('');
+  container.innerHTML = items || '<div class="activity-item"><div class="activity-content">No activity yet</div></div>';
+}
+
+// Initialize orders when dashboard loads
+async function initializeOrders() {
+  if (document.querySelector('#section-listings')) {
+    // Clean up localStorage first
+    cleanupDashboardStorage();
+    await loadOrders();
+    if (getOrders().length === 0) {
+      addDemoOrders();
+    }
+    renderOrders();
+    
+    // Update dashboard stats after orders are loaded
+    updateDashboardStats();
+    
+    // Setup search functionality
+    const searchBar = document.querySelector('#section-listings .search-bar');
+    if (searchBar) {
+      searchBar.addEventListener('input', function() {
+        const query = this.value.trim();
+        const filteredOrders = searchOrders(query);
+        renderOrders(filteredOrders);
+        // Update dashboard stats after search
+        updateDashboardStats();
+      });
+    }
+    
+    // Setup filter functionality
+    setupFilterFunctionality();
+  }
+}
+
+function cleanupDashboardStorage() {
+  try {
+    // Check and clean up orders if too many
+    const orders = getOrders();
+    if (orders.length > 100) {
+      const cleanedOrders = orders.slice(0, 100);
+      setOrders(cleanedOrders);
+      console.log('Cleaned up dashboard orders to prevent overflow');
+    }
+    
+    // Check and clean up products if too many
+    const products = JSON.parse(localStorage.getItem('products') || '[]');
+    if (products.length > 200) {
+      localStorage.setItem('products', JSON.stringify(products.slice(0, 200)));
+      console.log('Cleaned up products to prevent overflow');
+    }
+  } catch (error) {
+    console.error('Error during dashboard storage cleanup:', error);
+  }
+}
+
+// Function to clear all data (for emergency use)
+function clearAllData() {
+  if (confirm('⚠️ ВНИМАНИЕ! Это действие удалит ВСЕ данные из localStorage!\n\nЭто включает:\n- Все заказы\n- Все продукты\n- Все профили пользователей\n- Корзины и избранное\n\nВы уверены, что хотите продолжить?')) {
+    try {
+      // Clear all localStorage
+      localStorage.clear();
+      
+      // Show success message
+      showNotification('Все данные успешно очищены!', 'success');
+      
+      // Reload page to reset everything
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Error clearing data:', error);
+      showNotification('Ошибка при очистке данных', 'error');
+    }
+  }
+}
+
+async function addDemoOrders() { /* disabled: no demo seed orders */ }
+
+// Dashboard Statistics Functions
+function calculateDashboardStats() {
+  const orders = getOrders();
+  const products = JSON.parse(localStorage.getItem('products') || '[]');
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+  
+  // Calculate total revenue from orders
+  const totalRevenue = orders.reduce((sum, order) => {
+    return sum + (order.total || 0);
+  }, 0);
+  
+  // Calculate total orders
+  const totalOrders = orders.length;
+  
+  // Calculate active customers (unique customers who placed orders)
+  const uniqueCustomers = new Set(orders.map(order => order.customerEmail || order.customerName));
+  const activeCustomers = uniqueCustomers.size;
+  
+  // Calculate total products
+  const totalProducts = products.length;
+  
+  // Calculate growth percentages (comparing with previous period)
+  const currentPeriod = orders.filter(order => {
+    const orderDate = new Date(order.date || order.timestamp);
+    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    return orderDate >= weekAgo;
+  });
+  
+  const previousPeriod = orders.filter(order => {
+    const orderDate = new Date(order.date || order.timestamp);
+    const twoWeeksAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
+    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    return orderDate >= twoWeeksAgo && orderDate < weekAgo;
+  });
+  
+  const currentRevenue = currentPeriod.reduce((sum, order) => sum + (order.total || 0), 0);
+  const previousRevenue = previousPeriod.reduce((sum, order) => sum + (order.total || 0), 0);
+  const revenueGrowth = previousRevenue > 0 ? ((currentRevenue - previousRevenue) / previousRevenue * 100) : 0;
+  
+  const currentOrders = currentPeriod.length;
+  const previousOrders = previousPeriod.length;
+  const ordersGrowth = previousOrders > 0 ? ((currentOrders - previousOrders) / previousOrders * 100) : 0;
+  
+  const currentCustomers = new Set(currentPeriod.map(order => order.customerEmail || order.customerName)).size;
+  const previousCustomers = new Set(previousPeriod.map(order => order.customerEmail || order.customerName)).size;
+  const customersGrowth = previousCustomers > 0 ? ((currentCustomers - previousCustomers) / previousCustomers * 100) : 0;
+  
+  return {
+    totalRevenue: totalRevenue.toFixed(2),
+    totalOrders: totalOrders,
+    activeCustomers: activeCustomers,
+    totalProducts: totalProducts,
+    revenueGrowth: revenueGrowth.toFixed(1),
+    ordersGrowth: ordersGrowth.toFixed(1),
+    customersGrowth: customersGrowth.toFixed(1)
+  };
+}
+
+function updateDashboardStats() {
+  const stats = calculateDashboardStats();
+  
+  // Update revenue card
+  const revenueValue = document.querySelector('.stat-card:nth-child(1) .stat-value');
+  const revenueGrowth = document.querySelector('.stat-card:nth-child(1) .stat-change');
+  if (revenueValue) revenueValue.textContent = `$${stats.totalRevenue}`;
+  if (revenueGrowth) {
+    revenueGrowth.textContent = `${stats.revenueGrowth > 0 ? '+' : ''}${stats.revenueGrowth}%`;
+    revenueGrowth.className = `stat-change ${stats.revenueGrowth > 0 ? 'positive' : stats.revenueGrowth < 0 ? 'negative' : 'neutral'}`;
+  }
+  
+  // Update orders card
+  const ordersValue = document.querySelector('.stat-card:nth-child(2) .stat-value');
+  const ordersGrowth = document.querySelector('.stat-card:nth-child(2) .stat-change');
+  if (ordersValue) ordersValue.textContent = stats.totalOrders;
+  if (ordersGrowth) {
+    ordersGrowth.textContent = `${stats.ordersGrowth > 0 ? '+' : ''}${stats.ordersGrowth}%`;
+    ordersGrowth.className = `stat-change ${stats.ordersGrowth > 0 ? 'positive' : stats.ordersGrowth < 0 ? 'negative' : 'neutral'}`;
+  }
+  
+  // Update customers card
+  const customersValue = document.querySelector('.stat-card:nth-child(3) .stat-value');
+  const customersGrowth = document.querySelector('.stat-card:nth-child(3) .stat-change');
+  if (customersValue) customersValue.textContent = stats.activeCustomers;
+  if (customersGrowth) {
+    customersGrowth.textContent = `${stats.customersGrowth > 0 ? '+' : ''}${stats.customersGrowth}%`;
+    customersGrowth.className = `stat-change ${stats.customersGrowth > 0 ? 'positive' : stats.customersGrowth < 0 ? 'negative' : 'neutral'}`;
+  }
+  
+  // Update products card
+  const productsValue = document.querySelector('.stat-card:nth-child(4) .stat-value');
+  const productsGrowth = document.querySelector('.stat-card:nth-child(4) .stat-change');
+  if (productsValue) productsValue.textContent = stats.totalProducts;
+  if (productsGrowth) {
+    productsGrowth.textContent = '0%';
+    productsGrowth.className = 'stat-change neutral';
+  }
+}
+
+// Auto-refresh dashboard stats every 30 seconds
+function startDashboardAutoRefresh() {
+  updateDashboardStats();
+  setInterval(updateDashboardStats, 30000); // Update every 30 seconds
+  
+  // Listen for localStorage changes
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'orders' || e.key === 'products' || e.key === 'users') {
+      updateDashboardStats();
+    }
+  });
+  
+  // Listen for cart changes
+  window.addEventListener('cartUpdated', function() {
+    updateDashboardStats();
+  });
+  
+  // Listen for favorites changes
+  window.addEventListener('favoritesUpdated', function() {
+    updateDashboardStats();
+  });
+  
+  // Listen for profile changes
+  window.addEventListener('profileUpdated', function() {
+    updateDashboardStats();
+  });
+  
+  // Listen for orders changes
+  window.addEventListener('ordersUpdated', function() {
+    updateDashboardStats();
+  });
+  
+  // Listen for products changes
+  window.addEventListener('productsUpdated', function() {
+    updateDashboardStats();
+  });
+  
+  // Listen for users changes
+  window.addEventListener('usersUpdated', function() {
+    updateDashboardStats();
+  });
+  
+  // Listen for cart changes
+  window.addEventListener('cartUpdated', function() {
+    updateDashboardStats();
+  });
+}
+
+// Initialize all sections when dashboard loads
+document.addEventListener('DOMContentLoaded', function() {
+  // Setup theme switching
+  setupThemeSwitching();
+  
+  // Setup filter functionality
+  setupFilterFunctionality();
+  
+  // Initialize dashboard statistics
+  startDashboardAutoRefresh();
+  renderRecentActivity();
+  
+  // Initialize products
+  if (document.querySelector('#section-product')) {
+    loadProducts().then(() => renderProducts());
+  }
+  
+  // Initialize orders
+  if (document.querySelector('#section-listings')) {
+    initializeOrders();
+  }
+});

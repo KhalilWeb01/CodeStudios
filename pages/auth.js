@@ -70,6 +70,19 @@
     users.push(user);
     setUsers(users);
     setSession(user.id, remember);
+    // Sync to backend customers API (best-effort)
+    try {
+      await fetch('../api/customers.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          passwordHash: user.passwordHash
+        })
+      });
+    } catch {}
     return { id: user.id, email: user.email, name: user.name };
   }
 

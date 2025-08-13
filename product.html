@@ -305,7 +305,24 @@
       const product = products.find(p => p.id === id);
       
       if (!product) {
-        detail.innerHTML = '<div class="error">Product not found.</div>';
+        // Try to fetch from backend API, then retry render
+        fetch('api/products.php?id=' + encodeURIComponent(id))
+          .then(r => r.ok ? r.json() : null)
+          .then(p => {
+            if (p && p.id) {
+              try {
+                const arr = getProducts();
+                arr.push(p);
+                localStorage.setItem('products', JSON.stringify(arr));
+              } catch {}
+              loadProduct();
+            } else {
+              detail.innerHTML = '<div class="error">Product not found.</div>';
+            }
+          })
+          .catch(() => {
+            detail.innerHTML = '<div class="error">Product not found.</div>';
+          });
         return;
       }
 
