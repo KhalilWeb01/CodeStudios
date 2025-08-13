@@ -64,7 +64,9 @@ body {
   flex-basis: 200px;
   max-width: 200px;
   flex-shrink: 0;
-  background-color: var(--sidebar);
+  background: rgba(21,30,47,0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   display: flex;
   flex-direction: column;
 }
@@ -192,7 +194,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 4px;
+  padding: 0 12px;
 }
 .app-content-headerText {
   color: var(--app-content-main-color);
@@ -687,6 +689,19 @@ body {
   font-size: 18px;
   font-weight: 500;
   margin-right: 24px;
+}
+.logo-arc-top { animation: drawArc 2s ease-in-out infinite alternate; }
+.logo-arc-bottom { animation: drawArc 2s ease-in-out infinite alternate-reverse; }
+.logo-vert { stroke-dasharray: 40 200; animation: dash 2s linear infinite; }
+.logo-horiz { stroke-dasharray: 40 200; animation: dash 2s linear infinite reverse; }
+
+@keyframes dash {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 240; }
+}
+@keyframes drawArc {
+  0% { opacity: .6; }
+  100% { opacity: 1; }
 }
 .home-block svg {
   color: var(--action-color);

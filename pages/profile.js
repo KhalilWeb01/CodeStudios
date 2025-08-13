@@ -422,6 +422,19 @@ class ProfileManager {
                     this.orders.splice(20);
                 }
                 this.saveOrders();
+
+                // Redirect to Stripe Checkout
+                fetch('../api/payments/stripe_create_checkout.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ orderId: dashboardOrder.id })
+                }).then(r => r.json()).then(j => {
+                    if (j && j.url) {
+                        window.location.href = j.url;
+                    } else {
+                        this.showNotification('Ошибка инициализации оплаты', 'error');
+                    }
+                }).catch(() => this.showNotification('Ошибка инициализации оплаты', 'error'));
             }).catch(() => {
                 // fallback to local storage only
                 const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');

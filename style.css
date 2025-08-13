@@ -558,7 +558,9 @@ footer ul li a {
   left: 0;
   height: 100%;
   width: 250px;
-  background: #fff;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   box-shadow: 2px 0 12px rgba(0,0,0,0.08);
   transform: translateX(-100%);
   transition: transform 0.3s ease;
@@ -2082,7 +2084,9 @@ footer .subscribe .terms {
 }
 
 .dark-theme .sidebar {
-  background: #2a2a2a !important;
+  background: rgba(35,39,43,0.6) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
   color: #ffffff !important;
 }
 
